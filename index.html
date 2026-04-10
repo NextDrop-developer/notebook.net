@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>notebook.net</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root { --beige: #F5F5DC; --dark: #333; --white: #FFFFFF; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--beige); margin: 0; color: var(--dark); text-align: center; }
+        .page { display: none; padding: 20px; animation: fadeIn 0.5s; }
+        .active { display: block; }
+
+        /* Приветственный экран */
+        .welcome-screen { height: 80vh; display: flex; flex-direction: column; justify-content: center; }
+        .logo { font-size: 2.5rem; font-weight: bold; letter-spacing: -1px; }
+        .btn { background: var(--dark); color: white; padding: 15px 30px; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; margin-top: 20px; }
+
+        /* Слайдер продуктов */
+        .product-slider { display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .card { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); max-width: 250px; }
+        .card img { width: 100%; border-radius: 5px; }
+        .nav-btn { background: none; border: 2px solid var(--dark); border-radius: 50%; width: 40px; height: 40px; cursor: pointer; }
+
+        /* Форма регистрации */
+        input { width: 80%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+    <div id="screen-welcome" class="page active">
+        <div class="welcome-screen">
+            <div class="logo">notebook.net</div>
+            <p>Твой идеальный блокнот ждет тебя</p>
+            <button class="btn" onclick="showPage('screen-catalog')">Начать покупать</button>
+        </div>
+    </div>
+
+    <div id="screen-catalog" class="page">
+        <h2>Выберите свой стиль</h2>
+        <div class="product-slider">
+            <button class="nav-btn" onclick="prevProduct()">‹</button>
+            <div id="product-card" class="card">
+                <img id="p-img" src="https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=300" alt="notebook">
+                <h3 id="p-title">Minimalist White</h3>
+                <p id="p-price">25.00€</p>
+                <button class="btn" onclick="showPage('screen-auth')">Купить</button>
+            </div>
+            <button class="nav-btn" onclick="nextProduct()">›</button>
+        </div>
+        <p style="margin-top: 20px; cursor: pointer;" onclick="showPage('screen-welcome')">← Назад</p>
+    </div>
+
+    <div id="screen-auth" class="page">
+        <h2>Регистрация</h2>
+        <p>Чтобы продолжить покупку, создайте аккаунт</p>
+        <input type="text" placeholder="Имя">
+        <input type="email" placeholder="E-mail">
+        <input type="password" placeholder="Пароль">
+        <br>
+        <button class="btn" onclick="showPage('screen-payment')">Зарегистрироваться</button>
+    </div>
+
+    <div id="screen-payment" class="page">
+        <h2>Оплата</h2>
+        <p>Выберите способ оплаты:</p>
+        <button class="btn" style="background: #0070ba;">PayPal</button>
+        <button class="btn" style="background: #108910;">IBAN Transfer</button>
+    </div>
+
+<script>
+    // Проверка: открыты ли мы в Telegram
+const isTelegram = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData !== "";
+
+if (!isTelegram) {
+    console.log("Это обычный браузер");
+    // Тут можно ничего не делать, сайт просто загрузится как обычный index.html
+    // Или можно добавить плашку: "Установите Telegram для лучшего опыта"
+} else {
+    console.log("Это Telegram Mini App");
+    window.Telegram.WebApp.expand();
+}
+    // Инициализация Telegram WebApp
+    let tg = window.Telegram.WebApp;
+    tg.expand(); // Развернуть на максимум
+
+    // Массив товаров
+    const products = [
+        {title: "Minimalist White", price: "25.00€", img: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=300"},
+        {title: "Beige Dream", price: "28.00€", img: "https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=300"},
+        {title: "Night Journal", price: "30.00€", img: "https://images.unsplash.com/photo-1516414447565-b14be0adf13e?w=300"}
+    ];
+
+    let currentIdx = 0;
+
+    // Главная функция переключения страниц
+    function showPage(pageId) {
+        console.log("Переход на страницу:", pageId); // Для отладки
+
+        // Прячем все страницы
+        const pages = document.querySelectorAll('.page');
+        pages.forEach(p => {
+            p.classList.remove('active');
+            p.style.display = 'none';
+        });
+
+        // Показываем нужную
+        const activePage = document.getElementById(pageId);
+        if (activePage) {
+            activePage.classList.add('active');
+            activePage.style.display = 'block';
+        }
+
+        // Логика кнопки "Назад" в самом Телеграме
+        if (pageId === 'screen-welcome') {
+            tg.BackButton.hide();
+        } else {
+            tg.BackButton.show();
+        }
+    }
+
+    // Обработка кнопки "Назад" в Телеграме
+    tg.BackButton.onClick(() => {
+        if (document.getElementById('screen-catalog').classList.contains('active')) {
+            showPage('screen-welcome');
+        } else if (document.getElementById('screen-auth').classList.contains('active')) {
+            showPage('screen-catalog');
+        } else {
+            showPage('screen-welcome');
+        }
+    });
+
+    function updateProduct() {
+        document.getElementById('p-img').src = products[currentIdx].img;
+        document.getElementById('p-title').innerText = products[currentIdx].title;
+        document.getElementById('p-price').innerText = products[currentIdx].price;
+    }
+
+    function nextProduct() {
+        currentIdx = (currentIdx + 1) % products.length;
+        updateProduct();
+    }
+
+    function prevProduct() {
+        currentIdx = (currentIdx - 1 + products.length) % products.length;
+        updateProduct();
+    }
+
+    // Инициализация при загрузке
+    window.onload = function() {
+        showPage('screen-welcome');
+        updateProduct();
+    };
+</script>
