@@ -76,12 +76,6 @@
             cursor: pointer;
         }
 
-        .option-card h3 {
-            margin: 0 0 5px 0;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
         .price {
             color: var(--accent);
             font-weight: 600;
@@ -100,6 +94,7 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-top: 20px;
+            cursor: pointer;
         }
 
         .input-group {
@@ -118,6 +113,12 @@
         }
 
         input:focus { border-bottom: 1px solid var(--text); }
+
+        .success-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -163,14 +164,20 @@
         </div>
     </div>
 
+    <div id="step4" class="page">
+        <div class="content" style="padding-top: 50px;">
+            <span class="success-icon">🤍</span>
+            <h1>Спасибо!</h1>
+            <p class="description">Ваш предзаказ принят. Мы отправили подробности на вашу почту.</p>
+            <button class="btn-black" onclick="tg.close()">Закрыть</button>
+        </div>
+    </div>
+
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        let order = {
-            version: '',
-            price: 0
-        };
+        let order = { version: '', price: 0 };
 
         function nextStep(step) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -202,12 +209,11 @@
                 price: order.price
             };
 
-            // КРИТИЧЕСКИ ВАЖНО:
             // 1. Отправляем данные в бота
             tg.sendData(JSON.stringify(data));
             
-            // 2. Закрываем Mini App (на мобилках это происходит само, но лучше прописать)
-            tg.close();
+            // 2. Показываем экран "Спасибо"
+            nextStep(4);
         }
     </script>
 </body>
