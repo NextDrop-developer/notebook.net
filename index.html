@@ -26,20 +26,19 @@
             min-height: 100vh;
         }
         
-        .active { display: block; }
-
-        /* ПЕРВЫЙ СЛАЙД: ОБЫЧНЫЙ ПОТОК (СВЕРХУ ВНИЗ) */
-        #step1.active { display: block; }
+        /* ПЕРВЫЙ СЛАЙД: ВСЁ СВЕРХУ */
+        #step1.active { display: block !important; }
         #step1 .hero-img { width: 100%; height: auto; max-height: 45vh; object-fit: cover; display: block; }
         #step1 .content { padding: 15px 25px; text-align: center; }
 
-        /* ВСЕ ОСТАЛЬНЫЕ: ЦЕНТРИРОВАНИЕ ЧЕРЕЗ FLEX */
+        /* ОСТАЛЬНЫЕ: ЦЕНТРИРОВАНИЕ */
         #step2.active, #step3.active, #step4.active { 
-            display: flex; 
+            display: flex !important; 
             flex-direction: column; 
             justify-content: center; 
             align-items: center; 
         }
+
         .content { width: 100%; padding: 25px; text-align: center; }
 
         h1 { font-weight: 300; text-transform: uppercase; letter-spacing: 4px; font-size: 18px; margin-bottom: 10px; }
@@ -51,14 +50,17 @@
             cursor: pointer; border-radius: 2px;
         }
 
+        /* КАРТОЧКИ С ОПИСАНИЕМ */
         .cards-container { display: flex; flex-direction: column; gap: 12px; text-align: left; width: 100%; }
         .card { background: #fff; padding: 20px; border: 1px solid #eee; border-radius: 2px; cursor: pointer; }
         .price { color: var(--accent); font-weight: 600; font-size: 15px; display: block; margin-bottom: 4px; }
+        .card-title { font-size: 17px; font-weight: 600; margin-bottom: 5px; }
+        .card-desc { font-size: 12px; color: var(--muted); line-height: 1.4; }
         
         input { 
             width: 100%; border: none; border-bottom: 1px solid #ccc; 
             background: transparent; padding: 12px 0; font-size: 16px; 
-            margin-bottom: 20px; outline: none; text-align: left;
+            margin-bottom: 20px; outline: none;
         }
     </style>
 </head>
@@ -68,7 +70,7 @@
         <img src="notepic.jpg" class="hero-img">
         <div class="content">
             <h1>Дай себе год</h1>
-            <p class="description">Блокнот для тех, кто ищет гармонию и ясность в каждом дне. Пространство для ваших мыслей.</p>
+            <p class="description">Блокнот для тех, кто ищет гармонию и ясность в каждом дне. Пространство для ваших мыслей и целей.</p>
             <button class="btn" onclick="nextStep(2)">Сделать предзаказ</button>
         </div>
     </div>
@@ -79,13 +81,13 @@
             <div class="cards-container">
                 <div class="card" onclick="selectVersion('Color Edition', 49)">
                     <span class="price">49.00 €</span>
-                    <h3 style="font-size: 17px;">Color Edition</h3>
-                    <p style="font-size: 12px; color: var(--muted); margin-top: 5px;">Цветное оформление и премиум бумага.</p>
+                    <h3 class="card-title">Color Edition</h3>
+                    <p class="card-desc">Цветное оформление, твердый переплет и премиальная бумага для тех, кто любит эстетику в деталях.</p>
                 </div>
                 <div class="card" onclick="selectVersion('Classic Edition', 39)">
                     <span class="price">39.00 €</span>
-                    <h3 style="font-size: 17px;">Classic Edition</h3>
-                    <p style="font-size: 12px; color: var(--muted); margin-top: 5px;">Черно-белый минимализм.</p>
+                    <h3 class="card-title">Classic Edition</h3>
+                    <p class="card-desc">Черно-белый минимализм и мягкое покрытие. Строгость и фокус на самом главном.</p>
                 </div>
             </div>
         </div>
@@ -94,12 +96,10 @@
     <div id="step3" class="page">
         <div class="content">
             <h1>Данные</h1>
-            <div style="width: 100%; margin-top: 10px;">
-                <input type="text" id="name" placeholder="ИМЯ">
-                <input type="email" id="email" placeholder="EMAIL">
-                <input type="tel" id="phone" placeholder="ТЕЛЕФОН">
-                <button class="btn" onclick="sendData()">Подтвердить</button>
-            </div>
+            <input type="text" id="name" placeholder="ИМЯ">
+            <input type="email" id="email" placeholder="EMAIL">
+            <input type="tel" id="phone" placeholder="ТЕЛЕФОН">
+            <button class="btn" onclick="sendData()">Подтвердить</button>
         </div>
     </div>
 
@@ -107,7 +107,7 @@
         <div class="content">
             <span style="font-size: 50px; margin-bottom: 20px; display: block;">🤍</span>
             <h1>Merci</h1>
-            <p class="description">Заказ принят. Проверьте почту.</p>
+            <p class="description">Ваш предзаказ принят. Подробности уже на почте.</p>
             <button class="btn" onclick="tg.close()">Закрыть</button>
         </div>
     </div>
