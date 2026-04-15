@@ -11,12 +11,12 @@
         :root {
             --bg: #F9F8F3;
             --text: #1C1C1C;
-            --accent: #2F4F4F; /* Темно-зеленый из ТЗ */
+            --accent: #2F4F4F;
             --muted: #8E8E93;
         }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'Inter', sans-serif;
             background-color: var(--bg);
             color: var(--text);
             margin: 0;
@@ -32,74 +32,63 @@
             display: none; 
             width: 100%; 
             max-width: 420px; 
-            box-sizing: border-box;
-            animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fadeIn 0.5s ease;
         }
 
         .active { display: block; }
 
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: translateY(10px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Геро-изображение */
         .hero-img {
             width: 100%;
-            height: 350px;
+            height: auto;
+            max-height: 400px;
             object-fit: cover;
-            /* Если Катя еще не дала прямую ссылку, оставь пока заглушку или свое фото */
-            background: #E5E4DF; 
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: block;
         }
 
         .content {
-            padding: 40px 30px;
+            padding: 30px;
             text-align: center;
         }
 
         h1 {
             font-weight: 300;
-            font-size: 24px;
+            font-size: 22px;
             text-transform: uppercase;
             letter-spacing: 4px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         .description {
-            font-size: 15px;
+            font-size: 14px;
             line-height: 1.6;
             color: var(--muted);
-            margin-bottom: 40px;
-            font-weight: 300;
+            margin-bottom: 30px;
         }
 
-        /* Карточки товаров */
         .option-card {
             background: #FFFFFF;
-            padding: 30px;
+            padding: 25px;
             margin-bottom: 15px;
-            border-radius: 2px; /* Острые или почти острые углы выглядят дороже */
             border: 1px solid #EDEDED;
             text-align: left;
-            transition: 0.3s;
+            cursor: pointer;
         }
 
         .option-card h3 {
-            margin: 0 0 10px 0;
-            font-weight: 600;
+            margin: 0 0 5px 0;
             font-size: 18px;
-            letter-spacing: 1px;
+            font-weight: 600;
         }
 
-        .option-price {
-            font-size: 16px;
+        .price {
             color: var(--accent);
-            margin-bottom: 15px;
+            font-weight: 600;
+            margin-bottom: 10px;
             display: block;
         }
 
-        /* Кнопки */
         .btn-black {
             background: var(--text);
             color: #FFFFFF;
@@ -110,19 +99,11 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 2px;
-            cursor: pointer;
             margin-top: 20px;
-            transition: 0.3s;
         }
 
-        .btn-black:active {
-            opacity: 0.8;
-            transform: scale(0.98);
-        }
-
-        /* Поля ввода */
         .input-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             text-align: left;
         }
 
@@ -133,20 +114,10 @@
             background: transparent;
             padding: 12px 0;
             font-size: 16px;
-            font-family: inherit;
             outline: none;
-            transition: 0.3s;
         }
 
-        input:focus {
-            border-bottom: 1px solid var(--text);
-        }
-
-        .success-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
-            display: block;
-        }
+        input:focus { border-bottom: 1px solid var(--text); }
     </style>
 </head>
 <body>
@@ -155,55 +126,40 @@
         <img src="notepic.jpg" class="hero-img" alt="Notebook">
         <div class="content">
             <h1>Дай себе год</h1>
-            <p class="description">Блокнот для тех, кто хочет навести порядок в мыслях и лучше понять себя.</p>
-            <button class="btn-black" onclick="nextStep(2)">Оформить предзаказ</button>
+            <p class="description">Блокнот для тех, кто ищет гармонию.</p>
+            <button class="btn-black" onclick="nextStep(2)">Выбрать издание</button>
         </div>
     </div>
 
     <div id="step2" class="page">
         <div class="content">
-            <h1 style="font-size: 18px; margin-bottom: 30px;">Выберите издание</h1>
-            
+            <h1>Издание</h1>
             <div class="option-card" onclick="selectVersion('Color Edition', 49)">
                 <h3>Color Edition</h3>
-                <span class="option-price">49.00 €</span>
-                <p style="font-size: 13px; color: var(--muted); margin: 0;">Премиальная цветная версия. Ограниченный тираж.</p>
+                <span class="price">49.00 €</span>
+                <p style="font-size: 12px; color: var(--muted);">Цветное оформление и твердый переплет.</p>
             </div>
-
             <div class="option-card" onclick="selectVersion('Classic Edition', 39)">
                 <h3>Classic Edition</h3>
-                <span class="option-price">39.00 €</span>
-                <p style="font-size: 13px; color: var(--muted); margin: 0;">Минималистичная ч/б эстетика для глубокой работы.</p>
+                <span class="price">39.00 €</span>
+                <p style="font-size: 12px; color: var(--muted);">Черно-белый минимализм.</p>
             </div>
-            
-            <p style="font-size: 11px; color: var(--muted); margin-top: 20px;">Содержание обеих версий идентично.</p>
         </div>
     </div>
 
     <div id="step3" class="page">
         <div class="content">
-            <h1 style="font-size: 18px; margin-bottom: 40px;">Данные доставки</h1>
-            
+            <h1>Оформление</h1>
             <div class="input-group">
-                <input type="text" id="name" placeholder="ВАШЕ ИМЯ" autocomplete="off">
+                <input type="text" id="userName" placeholder="ИМЯ">
             </div>
             <div class="input-group">
-                <input type="tel" id="phone" placeholder="ТЕЛЕФОН" autocomplete="off">
+                <input type="email" id="userEmail" placeholder="EMAIL">
             </div>
             <div class="input-group">
-                <input type="email" id="email" placeholder="EMAIL" autocomplete="off">
+                <input type="tel" id="userPhone" placeholder="ТЕЛЕФОН">
             </div>
-
-            <button class="btn-black" onclick="submitOrder()">Подтвердить заказ</button>
-        </div>
-    </div>
-
-    <div id="step4" class="page">
-        <div class="content" style="padding-top: 100px;">
-            <span class="success-icon">🤍</span>
-            <h1>Merci</h1>
-            <p class="description">Ваш предзаказ принят. Мы свяжемся с вами в ближайшее время.</p>
-            <button class="btn-black" onclick="tg.close()">Закрыть</button>
+            <button class="btn-black" id="finalBtn" onclick="sendDataToBot()">Подтвердить</button>
         </div>
     </div>
 
@@ -211,12 +167,15 @@
         let tg = window.Telegram.WebApp;
         tg.expand();
 
-        let order = { version: '', price: 0 };
+        let order = {
+            version: '',
+            price: 0
+        };
 
         function nextStep(step) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('step' + step).classList.add('active');
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0);
         }
 
         function selectVersion(v, p) {
@@ -225,26 +184,30 @@
             nextStep(3);
         }
 
-        function submitOrder() {
-            const name = document.getElementById('name').value;
-            const phone = document.getElementById('phone').value;
-            const email = document.getElementById('email').value;
+        function sendDataToBot() {
+            const name = document.getElementById('userName').value;
+            const email = document.getElementById('userEmail').value;
+            const phone = document.getElementById('userPhone').value;
 
-            if (!name || !phone || !email) {
-                tg.showScanQrPopup({text: "Заполните все поля"}); // Просто для теста, лучше showAlert
+            if (!name || !email || !phone) {
                 tg.showAlert("Пожалуйста, заполните все поля");
                 return;
             }
 
             const data = {
-                version: order.version,
-                price: order.price,
                 name: name,
+                email: email,
                 phone: phone,
-                email: email
+                version: order.version,
+                price: order.price
             };
 
+            // КРИТИЧЕСКИ ВАЖНО:
+            // 1. Отправляем данные в бота
             tg.sendData(JSON.stringify(data));
+            
+            // 2. Закрываем Mini App (на мобилках это происходит само, но лучше прописать)
+            tg.close();
         }
     </script>
 </body>
