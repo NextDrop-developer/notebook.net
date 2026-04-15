@@ -2,154 +2,284 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>notebook.net</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        :root { --beige: #F5F5DC; --dark: #333; --white: #FFFFFF; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--beige); margin: 0; color: var(--dark); text-align: center; }
-        .page { display: none; padding: 20px; animation: fadeIn 0.5s; }
+        :root {
+            --bg-color: #F5F5DC; /* Молочный/Бежевый */
+            --text-color: #2B2B2B; /* Темно-коричневый */
+            --accent-color: #2F4F4F; /* Темно-зеленый */
+            --btn-text: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .page { display: none; width: 100%; max-width: 400px; animation: fadeIn 0.3s; }
         .active { display: block; }
 
-        /* Приветственный экран */
-        .welcome-screen { height: 80vh; display: flex; flex-direction: column; justify-content: center; }
-        .logo { font-size: 2.5rem; font-weight: bold; letter-spacing: -1px; }
-        .btn { background: var(--dark); color: white; padding: 15px 30px; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer; margin-top: 20px; }
-
-        /* Слайдер продуктов */
-        .product-slider { display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .card { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); max-width: 250px; }
-        .card img { width: 100%; border-radius: 5px; }
-        .nav-btn { background: none; border: 2px solid var(--dark); border-radius: 50%; width: 40px; height: 40px; cursor: pointer; }
-
-        /* Форма регистрации */
-        input { width: 80%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h1 { font-size: 24px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        p { font-size: 16px; line-height: 1.5; margin-bottom: 20px; }
+
+        .card {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .price { font-weight: bold; font-size: 20px; color: var(--accent-color); margin: 10px 0; }
+
+        button {
+            background-color: var(--accent-color);
+            color: var(--btn-text);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+
+        button:active { transform: scale(0.98); }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .small-text { font-size: 12px; color: #666; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-    <div id="screen-welcome" class="page active">
-        <div class="welcome-screen">
-            <div class="logo">notebook.net</div>
-            <p>Твой идеальный блокнот ждет тебя</p>
-            <button class="btn" onclick="showPage('screen-catalog')">Начать покупать</button>
+    <div id="step1" class="page active">
+        <h1>Дай себе год</h1>
+        <p>Блокнот, который помогает навести порядок в голове и лучше понять себя</p>
+        <p><b>Предзаказ первой партии открыт</b></p>
+        <button onclick="nextStep(2)">👉 Оформить предзаказ</button>
+    </div>
+
+    <div id="step2" class="page">
+        <h1>Выберите версию</h1>
+
+        <div class="card">
+            <h3>Color Edition</h3>
+            <p>Премиальная версия с цветным оформлением</p>
+            <div class="price">49 €</div>
+            <button onclick="selectVersion('Color Edition', 49)">👉 Выбрать Color</button>
         </div>
-    </div>
 
-    <div id="screen-catalog" class="page">
-        <h2>Выберите свой стиль</h2>
-        <div class="product-slider">
-            <button class="nav-btn" onclick="prevProduct()">‹</button>
-            <div id="product-card" class="card">
-                <img id="p-img" src="https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=300" alt="notebook">
-                <h3 id="p-title">Minimalist White</h3>
-                <p id="p-price">25.00€</p>
-                <button class="btn" onclick="showPage('screen-auth')">Купить</button>
-            </div>
-            <button class="nav-btn" onclick="nextProduct()">›</button>
+        <div class="card">
+            <h3>Classic Edition</h3>
+            <p>Минималистичная версия в чёрно-белом стиле</p>
+            <div class="price">39 €</div>
+            <button onclick="selectVersion('Classic Edition', 39)">👉 Выбрать Classic</button>
         </div>
-        <p style="margin-top: 20px; cursor: pointer;" onclick="showPage('screen-welcome')">← Назад</p>
+
+        <p class="small-text">Содержание в обеих версиях одинаковое. Разница только в визуальном оформлении.</p>
     </div>
 
-    <div id="screen-auth" class="page">
-        <h2>Регистрация</h2>
-        <p>Чтобы продолжить покупку, создайте аккаунт</p>
-        <input type="text" placeholder="Имя">
-        <input type="email" placeholder="E-mail">
-        <input type="password" placeholder="Пароль">
-        <br>
-        <button class="btn" onclick="showPage('screen-payment')">Зарегистрироваться</button>
+    <div id="step3" class="page">
+        <h1>Оформление</h1>
+        <p id="selected-info"></p>
+        <input type="text" id="name" placeholder="Имя">
+        <input type="tel" id="phone" placeholder="Телефон">
+        <input type="email" id="email" placeholder="Email (обязательно)">
+        <button onclick="submitOrder()">👉 Подтвердить предзаказ</button>
     </div>
 
-    <div id="screen-payment" class="page">
-        <h2>Оплата</h2>
-        <p>Выберите способ оплаты:</p>
-        <button class="btn" style="background: #0070ba;">PayPal</button>
-        <button class="btn" style="background: #108910;">IBAN Transfer</button>
+    <div id="step4" class="page">
+        <h1>Спасибо 🤍</h1>
+        <p>Ты в первой партии блокнота «Дай себе год»</p>
+        <p>Я свяжусь с тобой после завершения предзаказа и перед отправкой.</p>
     </div>
 
-<script>
-    // Проверка: открыты ли мы в Telegram
-const isTelegram = window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData !== "";
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
 
-if (!isTelegram) {
-    console.log("Это обычный браузер");
-    // Тут можно ничего не делать, сайт просто загрузится как обычный index.html
-    // Или можно добавить плашку: "Установите Telegram для лучшего опыта"
-} else {
-    console.log("Это Telegram Mini App");
-    window.Telegram.WebApp.expand();
-}
-    // Инициализация Telegram WebApp
-    let tg = window.Telegram.WebApp;
-    tg.expand(); // Развернуть на максимум
+        let orderData = {
+            version: '',
+            price: 0
+        };
 
-    // Массив товаров
-    const products = [
-        {title: "Minimalist White", price: "25.00€", img: "https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=300"},
-        {title: "Beige Dream", price: "28.00€", img: "https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=300"},
-        {title: "Night Journal", price: "30.00€", img: "https://images.unsplash.com/photo-1516414447565-b14be0adf13e?w=300"}
-    ];
-
-    let currentIdx = 0;
-
-    // Главная функция переключения страниц
-    function showPage(pageId) {
-        console.log("Переход на страницу:", pageId); // Для отладки
-
-        // Прячем все страницы
-        const pages = document.querySelectorAll('.page');
-        pages.forEach(p => {
-            p.classList.remove('active');
-            p.style.display = 'none';
-        });
-
-        // Показываем нужную
-        const activePage = document.getElementById(pageId);
-        if (activePage) {
-            activePage.classList.add('active');
-            activePage.style.display = 'block';
+        function nextStep(step) {
+            document.querySelectorAll('.<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        :root {
+            --bg-color: #F5F5DC; /* Молочный/Бежевый */
+            --text-color: #2B2B2B; /* Темно-коричневый */
+            --accent-color: #2F4F4F; /* Темно-зеленый */
+            --btn-text: #FFFFFF;
         }
 
-        // Логика кнопки "Назад" в самом Телеграме
-        if (pageId === 'screen-welcome') {
-            tg.BackButton.hide();
-        } else {
-            tg.BackButton.show();
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
         }
-    }
 
-    // Обработка кнопки "Назад" в Телеграме
-    tg.BackButton.onClick(() => {
-        if (document.getElementById('screen-catalog').classList.contains('active')) {
-            showPage('screen-welcome');
-        } else if (document.getElementById('screen-auth').classList.contains('active')) {
-            showPage('screen-catalog');
-        } else {
-            showPage('screen-welcome');
+        .page { display: none; width: 100%; max-width: 400px; animation: fadeIn 0.3s; }
+        .active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h1 { font-size: 24px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+        p { font-size: 16px; line-height: 1.5; margin-bottom: 20px; }
+
+        .card {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(0,0,0,0.1);
         }
-    });
 
-    function updateProduct() {
-        document.getElementById('p-img').src = products[currentIdx].img;
-        document.getElementById('p-title').innerText = products[currentIdx].title;
-        document.getElementById('p-price').innerText = products[currentIdx].price;
-    }
+        .price { font-weight: bold; font-size: 20px; color: var(--accent-color); margin: 10px 0; }
 
-    function nextProduct() {
-        currentIdx = (currentIdx + 1) % products.length;
-        updateProduct();
-    }
+        button {
+            background-color: var(--accent-color);
+            color: var(--btn-text);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s;
+        }
 
-    function prevProduct() {
-        currentIdx = (currentIdx - 1 + products.length) % products.length;
-        updateProduct();
-    }
+        button:active { transform: scale(0.98); }
 
-    // Инициализация при загрузке
-    window.onload = function() {
-        showPage('screen-welcome');
-        updateProduct();
-    };
-</script>
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .small-text { font-size: 12px; color: #666; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+    <div id="step1" class="page active">
+        <h1>Дай себе год</h1>
+        <p>Блокнот, который помогает навести порядок в голове и лучше понять себя</p>
+        <p><b>Предзаказ первой партии открыт</b></p>
+        <button onclick="nextStep(2)">👉 Оформить предзаказ</button>
+    </div>
+
+    <div id="step2" class="page">
+        <h1>Выберите версию</h1>
+
+        <div class="card">
+            <h3>Color Edition</h3>
+            <p>Премиальная версия с цветным оформлением</p>
+            <div class="price">49 €</div>
+            <button onclick="selectVersion('Color Edition', 49)">👉 Выбрать Color</button>
+        </div>
+
+        <div class="card">
+            <h3>Classic Edition</h3>
+            <p>Минималистичная версия в чёрно-белом стиле</p>
+            <div class="price">39 €</div>
+            <button onclick="selectVersion('Classic Edition', 39)">👉 Выбрать Classic</button>
+        </div>
+
+        <p class="small-text">Содержание в обеих версиях одинаковое. Разница только в визуальном оформлении.</p>
+    </div>
+
+    <div id="step3" class="page">
+        <h1>Оформление</h1>
+        <p id="selected-info"></p>
+        <input type="text" id="name" placeholder="Имя">
+        <input type="tel" id="phone" placeholder="Телефон">
+        <input type="email" id="email" placeholder="Email (обязательно)">
+        <button onclick="submitOrder()">👉 Подтвердить предзаказ</button>
+    </div>
+
+    <div id="step4" class="page">
+        <h1>Спасибо 🤍</h1>
+        <p>Ты в первой партии блокнота «Дай себе год»</p>
+        <p>Я свяжусь с тобой после завершения предзаказа и перед отправкой.</p>
+    </div>
+
+    <script>
+        let tg = window.Telegram.WebApp;
+        tg.expand();
+
+        let orderData = {
+            version: '',
+            price: 0
+        };
+
+        function nextStep(step) {
+            document.querySelectorAll('.
+page').forEach(p => p.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+        }
+
+        function selectVersion(v, p) {
+            orderData.version = v;
+            orderData.price = p;
+            document.getElementById('selected-info').innerText = "Вы выбрали: " + v + " (" + p + "€)";
+            nextStep(3);
+        }
+
+        function submitOrder() {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+
+            if(!name  !phone  !email) {
+                alert("Пожалуйста, заполни все поля!");
+                return;
+            }
+
+            const finalData = {
+                version: orderData.version,
+                price: orderData.price,
+                name: name,
+                phone: phone,
+                email: email
+            };
+
+            // Отправляем данные в бота
+            tg.sendData(JSON.stringify(finalData));
+            nextStep(4);
+        }
+    </script>
+</body>
+</html>
