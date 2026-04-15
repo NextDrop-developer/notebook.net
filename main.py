@@ -1,80 +1,84 @@
-import asyncio
-import json
 import logging
+import json
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
 from aiogram import Bot, Dispatcher, types, F
-from aiogram.filters import CommandStart
-from aiogram.types import WebAppInfo, ReplyKeyboardMarkup, KeyboardButton
+from aiogram.filters import Command
+from aiogram.types import ContentType
 
-# Настройка логирования
-logging.basicConfig(level=logging.INFO)
+# === НАСТРОЙКИ ПОЧТЫ (ВСТАВЬ СВОЁ) ===
+SENDER_EMAIL = "notebook.net.info@gmail.com"  # Твоя новая почта
+SENDER_PASSWORD = "opad mpft xicz adle"  # Тот желтый код из 16 букв (без пробелов)
+# =====================================
 
-# --- КОНФИГ ---
-TOKEN = '7761399853:AAG01cSKwZODu3KlYL4RTnZgD0ck-wGP4gI'
-# Ссылка на твой сайт на GitHub Pages
-WEB_APP_URL = 'https://compatible-pseudoenthusiastic-sarah.ngrok-free.dev/'
-# Твой ID, чтобы бот присылал ТЕБЕ уведомления о заказах (узнай у @userinfobot)
-ADMIN_ID = 6127906696
+TOKEN = "7761399853:AAG01cSKwZODu3KlYL4RTnZgD0ck-wGP4gI" # Вставь токен от BotFather, если его тут нет
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
+logging.basicConfig(level=logging.INFO)
 
+# Функция для отправки письма
+def send_confirmation_email(user_email, user_name, version_name):
+    msg = MIMEMultipart()
+    msg['From'] = f"Дай себе год <{SENDER_EMAIL}>"
+    msg['To'] = user_email
+    msg['Subject'] = "Ваш предзаказ принят 🤍"
 
-# 1. Обработка команды /start
-@dp.message(CommandStart())
-async def start(message: types.Message):
-    # Создаем кнопку для открытия Mini App
-    kb = [
-        [KeyboardButton(text="🎁 Оформить предзаказ", web_app=WebAppInfo(url=WEB_APP_URL))]
-    ]
-    keyboard = ReplyKeyboardMarkup(keyboard=kb, resize_keyboard=True)
+    body = f"""
+    <html>
+    <body>
+        <h2 style="color: #2F4F4F;">Привет, {user_name}!</h2>
+        <p>Спасибо за интерес к проекту <b>«Дай себе год»</b>.</p>
+        <p>Мы получили твой предзаказ на издание: <b>{version_name}</b>.</p>
+        <p>В ближайшее время мы свяжемся с тобой для уточнения деталей оплаты и доставки.</p>
+        <br>
+        <hr>
+        <p style="font-size: 12px; color: grey;">Это автоматическое письмо, на него не нужно отвечать.</p>
+    </body>
+    </html>
+    """
+    msg.attach(MIMEText(body, 'html'))
 
-    await message.answer(
-        f"Привет, {message.from_user.first_name}! ✨\n\n"
-        "Добро пожаловать в предзаказ блокнота «Дай себе год».\n"
-        "Нажми на кнопку ниже, чтобы выбрать свою версию.",
-        reply_markup=keyboard
-    )
+    try:
+        # Убираем пробелы из пароля на всякий случай
+        clean_password = SENDER_PASSWORD.replace(" ", "")
+        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        server.login(SENDER_EMAIL, clean_password)
+        server.sendmail(SENDER_EMAIL, user_email, msg.as_string())
+        server.quit()
+        return True
+    except Exception as e:
+        print(f"Ошибка почты: {e}")
+        return False
 
+# Команда /start
+@dp.message(Command("start"))
+async def start_command(message: types.Message):
+    await message.answer("Привет! Нажми на кнопку ниже, чтобы оформить предзаказ.")
 
-# 2. Ловим данные из Mini App (когда нажали "Подтвердить предзаказ")
-@dp.message(F.web_app_data)
-async def handle_webapp_data(message: types.Message):
-    # Данные приходят в виде строки JSON
-    raw_data = message.web_app_data.data
-    data = json.loads(raw_data)  # Превращаем в словарь Python
+# Прием данных из Mini App
+@dp.message(F.content_type == ContentType.WEB_APP_DATA)
+async def get_webapp_data(message: types.Message):
+    # Распаковываем данные из JSON
+    data = json.loads(message.web_app_data.data)
+    name = data.get('name')
+    email = data.get('email')
+    version = data.get('version')
 
-    # Формируем красивое сообщение для админа (тебя или Кати)
-    order_text = (
-        f"🚀 **НОВЫЙ ПРЕДЗАКАЗ!**\n"
-        f"--------------------------\n"
-        f"📔 Версия: {data['version']}\n"
-        f"💰 Цена: {data['price']} €\n"
-        f"--------------------------\n"
-        f"👤 Имя: {data['name']}\n"
-        f"📱 Телефон: {data['phone']}\n"
-        f"📧 Email: {data['email']}\n"
-        f"--------------------------\n"
-        f"Юзернейм: @{message.from_user.username}"
-    )
+    # 1. Пытаемся отправить письмо
+    email_sent = send_confirmation_email(email, name, version)
 
-    # Отправляем подтверждение пользователю
-    await message.answer(
-        "✅ Спасибо! Твой предзаказ принят.\n"
-        "Мы свяжемся с тобой перед отправкой первой партии."
-    )
+    # 2. Отвечаем в Телеграм
+    if email_sent:
+        await message.answer(f"Спасибо, {name}! Заказ на {version} принят. Проверь почту {email} — письмо уже там! 📩")
+    else:
+        await message.answer(f"Спасибо, {name}! Заказ принят, но не удалось отправить письмо. Мы свяжемся с тобой позже.")
 
-    # Отправляем данные тебе (админу)
-    await bot.send_message(ADMIN_ID, order_text)
-
-
-# Запуск бота
 async def main():
-    print("Бот запущен и готов к работе...")
     await dp.start_polling(bot)
 
-
-if __name__ == '__main__':
-    try:
-        asyncio.run(main())
-    except KeyboardInterrupt:
-        print("Бот выключен")
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(main())
