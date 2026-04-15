@@ -8,8 +8,8 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
         
-        :root { --bg: #F9F8F3; --text: #1C1C1C; --accent: #2F4F4F; --muted: #8E8E93; }
-        * { box-sizing: border-box; }
+        :root { --bg: #F9F8F3; --text: #1C1C1C; --muted: #8E8E93; }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body { 
             font-family: 'Inter', sans-serif; 
@@ -17,7 +17,9 @@
             color: var(--text); 
             margin: 0; 
             padding: 0; 
-            display: block; /* Убрал flex отсюда, чтобы не тянуло контент */
+            /* Убираем любые попытки растянуть контент */
+            display: block !important; 
+            height: auto !important;
             min-height: 100vh;
         }
 
@@ -26,23 +28,23 @@
             width: 100%; 
             max-width: 420px; 
             margin: 0 auto;
-            animation: fadeIn 0.4s ease; 
         }
 
-        .active { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .active { display: block !important; }
 
         .hero-img { 
             width: 100%; 
-            max-height: 50vh; 
+            max-height: 45vh; 
             object-fit: cover; 
             display: block;
+            margin: 0;
         }
 
         .content { 
-            padding: 20px 25px; /* Уменьшил верхний отступ */
-            text-align: center; 
+            /* Жестко убираем пустоту сверху */
+            padding: 10px 25px 40px 25px !important; 
+            text-align: center;
+            display: block !important;
         }
 
         h1 { 
@@ -50,21 +52,21 @@
             text-transform: uppercase; 
             letter-spacing: 4px; 
             font-size: 18px; 
-            margin: 10px 0 15px; /* Сжал отступы вокруг заголовка */
+            margin: 10px 0 10px 0 !important; /* Минимальный отступ от картинки */
         }
         
         .description { 
             font-size: 14px; 
             color: var(--muted); 
-            line-height: 1.6; 
-            margin-bottom: 25px; 
+            line-height: 1.5; 
+            margin: 0 0 20px 0 !important; /* Расстояние до кнопки */
         }
 
         .btn { 
             background: var(--text); 
             color: #fff; 
             border: none; 
-            padding: 20px; 
+            padding: 18px; 
             width: 100%; 
             font-size: 13px; 
             font-weight: 600; 
@@ -72,19 +74,14 @@
             letter-spacing: 2px; 
             cursor: pointer;
             border-radius: 2px;
+            display: block;
         }
 
-        .cards-container { display: flex; flex-direction: column; gap: 12px; text-align: left; margin-top: 10px; }
-        .card { background: #fff; padding: 20px; border: 1px solid #eee; cursor: pointer; }
-        .price { color: var(--accent); font-weight: 600; display: block; margin-bottom: 4px; font-size: 15px; }
-        .card-title { font-weight: 600; font-size: 17px; margin: 0; }
-        .card-desc { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
-
-        input { 
-            width: 100%; border: none; border-bottom: 1px solid #ccc; 
-            background: transparent; padding: 12px 0; font-size: 16px; 
-            margin-bottom: 20px; outline: none; 
-        }
+        /* Остальные экраны */
+        .cards-container { display: flex; flex-direction: column; gap: 10px; text-align: left; margin-top: 15px; }
+        .card { background: #fff; padding: 20px; border: 1px solid #eee; }
+        .price { color: #2F4F4F; font-weight: 600; display: block; margin-bottom: 4px; }
+        input { width: 100%; border: none; border-bottom: 1px solid #ccc; background: transparent; padding: 12px 0; font-size: 16px; margin-bottom: 20px; outline: none; }
     </style>
 </head>
 <body>
@@ -95,7 +92,7 @@
             <h1>Дай себе год</h1>
             <p class="description">
                 Блокнот для тех, кто ищет гармонию и ясность в каждом дне. 
-                Это пространство для ваших мыслей, целей и внутреннего спокойствия.
+                Это пространство для ваших мыслей и целей.
             </p>
             <button class="btn" onclick="nextStep(2)">Сделать предзаказ</button>
         </div>
@@ -107,13 +104,13 @@
             <div class="cards-container">
                 <div class="card" onclick="selectVersion('Color Edition', 49)">
                     <span class="price">49.00 €</span>
-                    <h3 class="card-title">Color Edition</h3>
-                    <p class="card-desc">Цветное оформление, твердый переплет и премиальная бумага.</p>
+                    <h3 style="margin:0">Color Edition</h3>
+                    <p style="font-size:12px; color:var(--muted); margin:5px 0 0;">Цветное оформление и премиум бумага.</p>
                 </div>
                 <div class="card" onclick="selectVersion('Classic Edition', 39)">
                     <span class="price">39.00 €</span>
-                    <h3 class="card-title">Classic Edition</h3>
-                    <p class="card-desc">Черно-белый минимализм и мягкое покрытие.</p>
+                    <h3 style="margin:0">Classic Edition</h3>
+                    <p style="font-size:12px; color:var(--muted); margin:5px 0 0;">Черно-белый минимализм.</p>
                 </div>
             </div>
         </div>
@@ -121,20 +118,11 @@
 
     <div id="step3" class="page">
         <div class="content">
-            <h1>Ваши данные</h1>
-            <input type="text" id="name" placeholder="ВАШЕ ИМЯ">
+            <h1>Данные</h1>
+            <input type="text" id="name" placeholder="ИМЯ">
             <input type="email" id="email" placeholder="EMAIL">
             <input type="tel" id="phone" placeholder="ТЕЛЕФОН">
             <button class="btn" onclick="sendData()">Подтвердить</button>
-        </div>
-    </div>
-
-    <div id="step4" class="page">
-        <div class="content">
-            <span style="font-size: 50px; margin-bottom: 20px;">🤍</span>
-            <h1>Merci</h1>
-            <p class="description">Ваш предзаказ принят. Подробности уже на почте.</p>
-            <button class="btn" onclick="tg.close()">Закрыть</button>
         </div>
     </div>
 
@@ -158,9 +146,8 @@
             const n = document.getElementById('name').value;
             const e = document.getElementById('email').value;
             const p = document.getElementById('phone').value;
-            if(!n || !e || !p) { tg.showAlert("Заполните все поля"); return; }
+            if(!n || !e || !p) { tg.showAlert("Заполните поля"); return; }
             tg.sendData(JSON.stringify({name: n, email: e, phone: p, version: order.version}));
-            nextStep(4);
         }
     </script>
 </body>
