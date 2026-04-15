@@ -20,6 +20,7 @@
             display: flex; 
             flex-direction: column; 
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .page { 
@@ -27,39 +28,45 @@
             width: 100%; 
             max-width: 420px; 
             margin: 0 auto;
+            flex-direction: column;
+            min-height: 100vh;
             animation: fadeIn 0.4s ease; 
         }
 
-        .active { display: block; }
+        .active { display: flex; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .hero-img { 
             width: 100%; 
-            max-height: 45vh; 
+            max-height: 40vh; 
             object-fit: cover; 
             display: block;
         }
 
         .content { 
-            padding: 25px; 
+            padding: 30px; 
             text-align: center; 
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Центрируем всё по вертикали на телефоне */
         }
 
-        h1 { font-weight: 300; text-transform: uppercase; letter-spacing: 4px; font-size: 18px; margin: 15px 0 10px; }
+        h1 { font-weight: 300; text-transform: uppercase; letter-spacing: 4px; font-size: 18px; margin-bottom: 15px; }
         
         .description { 
             font-size: 14px; 
             color: var(--muted); 
             line-height: 1.6; 
-            margin-bottom: 20px; 
+            margin-bottom: 25px; 
         }
 
         .btn { 
             background: var(--text); 
             color: #fff; 
             border: none; 
-            padding: 18px; 
+            padding: 20px; 
             width: 100%; 
             font-size: 13px; 
             font-weight: 600; 
@@ -67,16 +74,16 @@
             letter-spacing: 2px; 
             cursor: pointer;
             border-radius: 2px;
-            margin-top: 10px;
+            transition: opacity 0.2s;
         }
+        .btn:active { opacity: 0.8; }
 
-        /* КОНТЕЙНЕР ДЛЯ КАРТОЧЕК */
         .cards-container {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            margin-top: 20px;
             text-align: left;
+            width: 100%;
         }
 
         .card { 
@@ -84,15 +91,15 @@
             padding: 20px; 
             border: 1px solid #eee; 
             cursor: pointer;
-            transition: background 0.2s;
+            transition: 0.2s;
         }
-
-        .card:active { background: #fcfcfc; }
+        .card:active { background: #f9f9f9; transform: scale(0.98); }
 
         .price { color: var(--accent); font-weight: 600; display: block; margin-bottom: 4px; font-size: 15px; }
-        .card-title { font-weight: 600; font-size: 17px; margin: 0; text-transform: none; letter-spacing: 0; }
-        .card-desc { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
+        .card-title { font-weight: 600; font-size: 17px; margin: 0; }
+        .card-desc { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
 
+        .input-group { width: 100%; margin-bottom: 15px; }
         input { 
             width: 100%; 
             border: none; 
@@ -100,16 +107,18 @@
             background: transparent; 
             padding: 12px 0; 
             font-size: 16px; 
-            margin-bottom: 20px; 
             outline: none; 
+            transition: border-color 0.3s;
         }
         input:focus { border-bottom: 1px solid var(--text); }
+        
+        .success-icon { font-size: 50px; margin-bottom: 20px; display: block; }
     </style>
 </head>
 <body>
 
     <div id="step1" class="page active">
-        <img src="notepic.jpg" class="hero-img">
+        <img src="notepic.jpg" class="hero-img" alt="Notebook">
         <div class="content">
             <h1>Дай себе год</h1>
             <p class="description">
@@ -127,7 +136,7 @@
                 <div class="card" onclick="selectVersion('Color Edition', 49)">
                     <span class="price">49.00 €</span>
                     <h3 class="card-title">Color Edition</h3>
-                    <p class="card-desc">Цветное оформление, твердый переплет и премиальная бумага для тех, кто любит детали.</p>
+                    <p class="card-desc">Цветное оформление, твердый переплет и премиальная бумага. Для тех, кто любит эстетику в деталях.</p>
                 </div>
                 
                 <div class="card" onclick="selectVersion('Classic Edition', 39)">
@@ -142,9 +151,14 @@
     <div id="step3" class="page">
         <div class="content">
             <h1>Ваши данные</h1>
-            <div style="margin-top: 20px;">
-                <input type="text" id="name" placeholder="ВАШЕ ИМЯ">
+            <p class="description">Оставьте контакты, чтобы мы могли связаться с вами для подтверждения заказа.</p>
+            <div class="input-group">
+                <input type="text" id="name" placeholder="ИМЯ">
+            </div>
+            <div class="input-group">
                 <input type="email" id="email" placeholder="EMAIL">
+            </div>
+            <div class="input-group">
                 <input type="tel" id="phone" placeholder="ТЕЛЕФОН">
             </div>
             <button class="btn" onclick="sendData()">Подтвердить предзаказ</button>
@@ -152,8 +166,8 @@
     </div>
 
     <div id="step4" class="page">
-        <div class="content" style="padding-top: 60px;">
-            <span style="font-size: 50px;">🤍</span>
+        <div class="content">
+            <span class="success-icon">🤍</span>
             <h1>Merci</h1>
             <p class="description">Ваш предзаказ принят. Подробности уже отправлены на вашу почту.</p>
             <button class="btn" onclick="tg.close()">Закрыть</button>
@@ -163,16 +177,21 @@
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
-        let order = { version: '', price: 0 };
+        
+        let order = {
+            version: '',
+            price: 0
+        };
 
         function nextStep(s) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('step' + s).classList.add('active');
-            window.scrollTo(0,0);
+            window.scrollTo(0, 0);
         }
 
         function selectVersion(v, p) {
-            order.version = v; order.price = p;
+            order.version = v;
+            order.price = p;
             nextStep(3);
         }
 
@@ -181,13 +200,22 @@
             const e = document.getElementById('email').value;
             const p = document.getElementById('phone').value;
 
-            if(!n || !e || !p) {
+            if (!n || !e || !p) {
                 tg.showAlert("Пожалуйста, заполните все поля");
                 return;
             }
 
-            const result = { name: n, email: e, phone: p, version: order.version };
+            const result = {
+                name: n,
+                email: e,
+                phone: p,
+                version: order.version
+            };
+
+            // Отправляем JSON строку в бота
             tg.sendData(JSON.stringify(result));
+            
+            // Показываем экран благодарности
             nextStep(4);
         }
     </script>
