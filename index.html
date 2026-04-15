@@ -7,95 +7,37 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
-        
-        :root { --bg: #F9F8F3; --text: #1C1C1C; --accent: #2F4F4F; --muted: #8E8E93; }
-        
+        :root { --bg: #F9F8F3; --text: #1C1C1C; --muted: #8E8E93; }
         * { box-sizing: border-box; }
-
-        body { 
-            font-family: 'Inter', sans-serif; 
-            background: var(--bg); 
-            color: var(--text); 
-            margin: 0; 
-            padding: 0; 
-            display: flex; 
-            flex-direction: column; 
-            height: 100vh; 
-            overflow: hidden; 
-        }
-
-        .page { 
-            display: none; 
-            width: 100%; 
-            height: 100%; 
-            max-width: 420px; 
-            margin: 0 auto;
-            animation: fadeIn 0.4s ease; 
-        }
-
-        .active { display: flex; flex-direction: column; }
-
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        .page { display: none; width: 100%; max-width: 420px; margin: 0 auto; animation: fadeIn 0.4s ease; }
+        .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .hero-img { 
-            width: 100%; 
-            max-height: 45vh; /* Картинка не больше 45% экрана */
-            object-fit: cover; 
-            display: block;
-        }
-
-        .content { 
-            padding: 25px; 
-            text-align: center; 
-            flex-grow: 1; 
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* Распределяет заголовок и кнопку */
-        }
-
-        h1 { font-weight: 300; text-transform: uppercase; letter-spacing: 4px; font-size: 18px; margin: 10px 0; }
-        .description { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 15px; }
+        .hero-img { width: 100%; max-height: 40vh; object-fit: cover; display: block; }
+        .content { padding: 30px; text-align: center; }
         
-        .card { background: #fff; padding: 20px; margin-bottom: 12px; border: 1px solid #eee; text-align: left; cursor: pointer; }
-        .price { color: var(--accent); font-weight: 600; display: block; margin-bottom: 5px; }
-
+        h1 { font-weight: 300; text-transform: uppercase; letter-spacing: 4px; font-size: 18px; margin-bottom: 10px; }
+        .description { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 25px; }
+        
         .btn { 
-            background: var(--text); 
-            color: #fff; 
-            border: none; 
-            padding: 18px; 
-            width: 100%; 
-            font-size: 13px; 
-            font-weight: 600; 
-            text-transform: uppercase; 
-            letter-spacing: 2px; 
-            cursor: pointer;
-            border-radius: 4px;
+            background: var(--text); color: #fff; border: none; padding: 18px; width: 100%; 
+            font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; 
+            cursor: pointer; border-radius: 2px; 
         }
 
-        input { 
-            width: 100%; 
-            border: none; 
-            border-bottom: 1px solid #ccc; 
-            background: transparent; 
-            padding: 12px 0; 
-            font-size: 16px; 
-            margin-bottom: 10px; 
-            outline: none; 
-        }
-        input:focus { border-bottom: 1px solid var(--text); }
-        
-        .success-screen { padding-top: 50px; }
+        .card { background: #fff; padding: 20px; margin-bottom: 15px; border: 1px solid #eee; text-align: left; }
+        input { width: 100%; border: none; border-bottom: 1px solid #ccc; background: transparent; padding: 12px 0; font-size: 16px; margin-bottom: 20px; outline: none; }
     </style>
 </head>
 <body>
 
     <div id="step1" class="page active">
-        <img src="notepic.jpg" class="hero-img"> <div class="content">
-            <div>
-                <h1>Дай себе год</h1>
-                <p class="description">Блокнот для тех, кто ищет гармонию и ясность в каждом дне.</p>
-            </div>
+        <img src="notepic.jpg" class="hero-img">
+        <div class="content">
+            <h1>Дай себе год</h1>
+            <p class="description">Блокнот для тех, кто ищет гармонию и ясность в каждом дне.</p>
             <button class="btn" onclick="nextStep(2)">Начать</button>
         </div>
     </div>
@@ -103,75 +45,47 @@
     <div id="step2" class="page">
         <div class="content">
             <h1>Издание</h1>
-            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-                <div class="card" onclick="selectVersion('Color Edition', 49)">
-                    <span class="price">49.00 €</span>
-                    <h3 style="margin:0">Color Edition</h3>
-                    <p style="font-size: 12px; color: var(--muted); margin: 5px 0 0;">Твердый переплет, цветная печать.</p>
-                </div>
-                <div class="card" onclick="selectVersion('Classic Edition', 39)">
-                    <span class="price">39.00 €</span>
-                    <h3 style="margin:0">Classic Edition</h3>
-                    <p style="font-size: 12px; color: var(--muted); margin: 5px 0 0;">Минимализм, черно-белый стиль.</p>
-                </div>
+            <div class="card" onclick="selectVersion('Color Edition', 49)">
+                <h3 style="margin:0">Color Edition — 49€</h3>
+            </div>
+            <div class="card" onclick="selectVersion('Classic Edition', 39)">
+                <h3 style="margin:0">Classic Edition — 39€</h3>
             </div>
         </div>
     </div>
 
     <div id="step3" class="page">
         <div class="content">
-            <h1>Оформление</h1>
-            <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: center;">
-                <input type="text" id="userName" placeholder="ВАШЕ ИМЯ">
-                <input type="email" id="userEmail" placeholder="EMAIL">
-                <input type="tel" id="userPhone" placeholder="ТЕЛЕФОН">
-            </div>
+            <h1>Ваши данные</h1>
+            <input type="text" id="name" placeholder="ИМЯ">
+            <input type="email" id="email" placeholder="EMAIL">
+            <input type="tel" id="phone" placeholder="ТЕЛЕФОН">
             <button class="btn" onclick="sendData()">Подтвердить</button>
         </div>
     </div>
 
     <div id="step4" class="page">
-        <div class="content success-screen">
-            <span style="font-size: 60px; margin-bottom: 20px;">🤍</span>
+        <div class="content">
+            <h1 style="font-size: 40px;">🤍</h1>
             <h1>Merci</h1>
-            <p class="description">Ваш предзаказ принят.<br>Подробности уже на вашей почте.</p>
+            <p class="description">Заказ принят. Проверьте почту.</p>
             <button class="btn" onclick="tg.close()">Закрыть</button>
         </div>
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
-        tg.expand();
-        let order = { version: '', price: 0 };
-
+        let order = { version: '' };
         function nextStep(s) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('step' + s).classList.add('active');
         }
-
-        function selectVersion(v, p) {
-            order.version = v; order.price = p;
-            nextStep(3);
-        }
-
+        function selectVersion(v, p) { order.version = v; nextStep(3); }
         function sendData() {
-            const name = document.getElementById('userName').value;
-            const email = document.getElementById('userEmail').value;
-            const phone = document.getElementById('userPhone').value;
-
-            if(!name || !email || !phone) {
-                tg.showAlert("Пожалуйста, заполните все поля");
-                return;
-            }
-
-            const result = {
-                name: name,
-                email: email,
-                phone: phone,
-                version: order.version
-            };
-
-            tg.sendData(JSON.stringify(result));
+            const n = document.getElementById('name').value;
+            const e = document.getElementById('email').value;
+            if(!n || !e) { tg.showAlert("Заполните поля"); return; }
+            tg.sendData(JSON.stringify({name: n, email: e, version: order.version}));
             nextStep(4);
         }
     </script>
