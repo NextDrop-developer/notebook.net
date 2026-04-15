@@ -18,18 +18,16 @@
             min-height: 100vh;
         }
 
-        .page { 
+        /* ПЕРВАЯ СТРАНИЦА: ОБЫЧНЫЙ СПИСОК (СВЕРХУ ВНИЗ) */
+        #step1 { 
             display: none; 
             width: 100%; 
             max-width: 420px; 
             margin: 0 auto; 
-            min-height: 100vh;
         }
-        
         #step1.active { display: block !important; }
-        #step1 .hero-img { width: 100%; height: auto; max-height: 48vh; object-fit: cover; display: block; }
-        #step1 .content { padding: 20px 25px; text-align: center; }
 
+        /* ОСТАЛЬНЫЕ: ЦЕНТРИРУЕМ ВЕСЬ ЭКРАН */
         .centered-page { 
             display: none; 
             width: 100%; 
@@ -42,7 +40,15 @@
         }
         .centered-page.active { display: flex !important; }
 
-        .content { width: 100%; padding: 25px; text-align: center; }
+        .hero-img { 
+            width: 100%; 
+            height: auto; 
+            max-height: 48vh; 
+            object-fit: cover; 
+            display: block; 
+        }
+
+        .content { width: 100%; padding: 20px 25px; text-align: center; }
 
         h1 { font-weight: 300; text-transform: uppercase; letter-spacing: 4px; font-size: 18px; margin-bottom: 8px; }
         .description { font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 25px; }
@@ -53,12 +59,11 @@
             cursor: pointer; border-radius: 2px;
         }
 
-        .cards-container { display: flex; flex-direction: column; gap: 15px; text-align: left; width: 100%; }
+        .cards-container { display: flex; flex-direction: column; gap: 12px; text-align: left; width: 100%; }
         .card { background: #fff; padding: 20px; border: 1px solid #eee; cursor: pointer; }
-        .price { color: var(--accent); font-weight: 600; font-size: 15px; display: block; margin-top: 10px; }
-        .card-title { font-size: 17px; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; }
-        .card-desc { font-size: 12px; color: var(--text); line-height: 1.6; }
-        .card-desc b { display: block; margin-bottom: 4px; color: var(--muted); font-weight: 400; }
+        .price { color: var(--accent); font-weight: 600; font-size: 15px; display: block; margin-bottom: 4px; }
+        .card-title { font-size: 17px; font-weight: 600; }
+        .card-desc { font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.4; }
         
         input { 
             width: 100%; border: none; border-bottom: 1px solid #ccc; 
@@ -73,53 +78,36 @@
         <img src="notepic.jpg" class="hero-img">
         <div class="content">
             <h1>Дай себе год</h1>
-            <p class="description">Блокнот, который помогает навести порядок в голове и лучше понять себя. Пространство для ваших мыслей.</p>
-            <button class="btn" onclick="nextStep(2)">Выбрать издание</button>
+            <p class="description">Блокнот для тех, кто ищет гармонию и ясность в каждом дне. Пространство для ваших мыслей.</p>
+            <button class="btn" onclick="nextStep(2)">Сделать предзаказ</button>
         </div>
     </div>
 
     <div id="step2" class="centered-page">
         <div class="content">
-            <h1 style="margin-bottom: 20px;">Выбор версии</h1>
+            <h1>Издание</h1>
             <div class="cards-container">
                 <div class="card" onclick="selectVersion('Color Edition', 49)">
+                    <span class="price">49.00 €</span>
                     <h3 class="card-title">Color Edition</h3>
-                    <div class="card-desc">
-                        <b>Премиальная версия с цветным оформлением</b>
-                        Внутри:<br>
-                        — трекеры состояния<br>
-                        — планер на месяц<br>
-                        — реальные истории людей<br>
-                        — тесты и практики<br>
-                        — вопросы для самопонимания
-                    </div>
-                    <span class="price">👉 49 € (предзаказ)</span>
+                    <p class="card-desc">Цветное оформление, твердый переплет и премиальная бумага.</p>
                 </div>
-
                 <div class="card" onclick="selectVersion('Classic Edition', 39)">
+                    <span class="price">39.00 €</span>
                     <h3 class="card-title">Classic Edition</h3>
-                    <div class="card-desc">
-                        <b>Минималистичная версия в чёрно-белом оформлении</b>
-                        Внутри:<br>
-                        — те же разделы и трекеры<br>
-                        — планер на месяц<br>
-                        — реальные истории<br>
-                        — тесты и практики
-                    </div>
-                    <span class="price">👉 39 € (предзаказ)</span>
+                    <p class="card-desc">Черно-белый минимализм и мягкое покрытие.</p>
                 </div>
             </div>
-            <p style="font-size: 11px; color: var(--muted); margin-top: 15px;">Обязательная фраза (внизу блока)</p>
         </div>
     </div>
 
     <div id="step3" class="centered-page">
         <div class="content">
-            <h1>Данные для связи</h1>
-            <input type="text" id="name" placeholder="ВАШЕ ИМЯ">
+            <h1>Данные</h1>
+            <input type="text" id="name" placeholder="ИМЯ">
             <input type="email" id="email" placeholder="EMAIL">
             <input type="tel" id="phone" placeholder="ТЕЛЕФОН">
-            <button class="btn" onclick="sendData()">Подтвердить предзаказ</button>
+            <button class="btn" onclick="sendData()">Подтвердить</button>
         </div>
     </div>
 
@@ -127,7 +115,7 @@
         <div class="content">
             <span style="font-size: 50px; display: block; margin-bottom: 20px;">🤍</span>
             <h1>Merci</h1>
-            <p class="description">Ваш предзаказ принят. Подробности уже на почте.</p>
+            <p class="description">Заказ принят. Проверьте почту.</p>
             <button class="btn" onclick="tg.close()">Закрыть</button>
         </div>
     </div>
@@ -152,7 +140,7 @@
             const n = document.getElementById('name').value;
             const e = document.getElementById('email').value;
             const p = document.getElementById('phone').value;
-            if(!n || !e || !p) { tg.showAlert("Заполните все поля"); return; }
+            if(!n || !e || !p) { tg.showAlert("Заполните поля"); return; }
             tg.sendData(JSON.stringify({name: n, email: e, phone: p, version: order.version}));
             nextStep(4);
         }
