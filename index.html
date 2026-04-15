@@ -7,28 +7,104 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
-        :root { --bg: #F9F8F3; --text: #1C1C1C; --muted: #8E8E93; }
+        
+        :root { --bg: #F9F8F3; --text: #1C1C1C; --accent: #2F4F4F; --muted: #8E8E93; }
         * { box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh; }
-        
-        .page { display: none; width: 100%; max-width: 420px; margin: 0 auto; animation: fadeIn 0.4s ease; }
-        .active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .hero-img { width: 100%; max-height: 40vh; object-fit: cover; display: block; }
-        .content { padding: 30px; text-align: center; }
-        
-        h1 { font-weight: 300; text-transform: uppercase; letter-spacing: 4px; font-size: 18px; margin-bottom: 10px; }
-        .description { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 25px; }
-        
-        .btn { 
-            background: var(--text); color: #fff; border: none; padding: 18px; width: 100%; 
-            font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; 
-            cursor: pointer; border-radius: 2px; 
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg); 
+            color: var(--text); 
+            margin: 0; 
+            padding: 0; 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh;
         }
 
-        .card { background: #fff; padding: 20px; margin-bottom: 15px; border: 1px solid #eee; text-align: left; }
-        input { width: 100%; border: none; border-bottom: 1px solid #ccc; background: transparent; padding: 12px 0; font-size: 16px; margin-bottom: 20px; outline: none; }
+        .page { 
+            display: none; 
+            width: 100%; 
+            max-width: 420px; 
+            margin: 0 auto;
+            animation: fadeIn 0.4s ease; 
+        }
+
+        .active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .hero-img { 
+            width: 100%; 
+            max-height: 45vh; 
+            object-fit: cover; 
+            display: block;
+        }
+
+        .content { 
+            padding: 25px; 
+            text-align: center; 
+        }
+
+        h1 { font-weight: 300; text-transform: uppercase; letter-spacing: 4px; font-size: 18px; margin: 15px 0 10px; }
+        
+        .description { 
+            font-size: 14px; 
+            color: var(--muted); 
+            line-height: 1.6; 
+            margin-bottom: 20px; 
+            text-align: center;
+        }
+
+        .btn { 
+            background: var(--text); 
+            color: #fff; 
+            border: none; 
+            padding: 18px; 
+            width: 100%; 
+            font-size: 13px; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            cursor: pointer;
+            border-radius: 2px;
+            margin-top: 10px;
+        }
+
+        /* СТИЛИ ДЛЯ ВТОРОГО СЛАЙДА (РОВНЫЕ КАРТОЧКИ) */
+        .cards-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .card { 
+            background: #fff; 
+            padding: 25px; 
+            border: 1px solid #eee; 
+            text-align: left; 
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .card:active { transform: scale(0.98); background: #fdfdfd; }
+
+        .price { color: var(--accent); font-weight: 600; display: block; margin-bottom: 5px; font-size: 16px; }
+        .card-title { font-weight: 600; font-size: 17px; margin: 0; }
+        .card-desc { font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.4; }
+
+        input { 
+            width: 100%; 
+            border: none; 
+            border-bottom: 1px solid #ccc; 
+            background: transparent; 
+            padding: 12px 0; 
+            font-size: 16px; 
+            margin-bottom: 20px; 
+            outline: none; 
+        }
+        input:focus { border-bottom: 1px solid var(--text); }
     </style>
 </head>
 <body>
@@ -37,19 +113,29 @@
         <img src="notepic.jpg" class="hero-img">
         <div class="content">
             <h1>Дай себе год</h1>
-            <p class="description">Блокнот для тех, кто ищет гармонию и ясность в каждом дне.</p>
-            <button class="btn" onclick="nextStep(2)">Начать</button>
+            <p class="description">
+                Блокнот для тех, кто ищет гармонию и ясность в каждом дне. 
+                Это пространство для ваших мыслей, целей и внутреннего спокойствия.
+            </p>
+            <button class="btn" onclick="nextStep(2)">Выбрать издание</button>
         </div>
     </div>
 
     <div id="step2" class="page">
         <div class="content">
             <h1>Издание</h1>
-            <div class="card" onclick="selectVersion('Color Edition', 49)">
-                <h3 style="margin:0">Color Edition — 49€</h3>
-            </div>
-            <div class="card" onclick="selectVersion('Classic Edition', 39)">
-                <h3 style="margin:0">Classic Edition — 39€</h3>
+            <div class="cards-container">
+                <div class="card" onclick="selectVersion('Color Edition', 49)">
+                    <span class="price">49.00 €</span>
+                    <h3 class="card-title">Color Edition</h3>
+                    <p class="card-desc">Цветное оформление, твердый переплет, премиальная бумага.</p>
+                </div>
+                
+                <div class="card" onclick="selectVersion('Classic Edition', 39)">
+                    <span class="price">39.00 €</span>
+                    <h3 class="card-title">Classic Edition</h3>
+                    <p class="card-desc">Черно-белый минимализм, мягкое покрытие, идеален для заметок.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -57,35 +143,52 @@
     <div id="step3" class="page">
         <div class="content">
             <h1>Ваши данные</h1>
-            <input type="text" id="name" placeholder="ИМЯ">
-            <input type="email" id="email" placeholder="EMAIL">
-            <input type="tel" id="phone" placeholder="ТЕЛЕФОН">
-            <button class="btn" onclick="sendData()">Подтвердить</button>
+            <div style="margin-top: 20px;">
+                <input type="text" id="name" placeholder="ВАШЕ ИМЯ">
+                <input type="email" id="email" placeholder="EMAIL">
+                <input type="tel" id="phone" placeholder="ТЕЛЕФОН">
+            </div>
+            <button class="btn" onclick="sendData()">Подтвердить предзаказ</button>
         </div>
     </div>
 
     <div id="step4" class="page">
-        <div class="content">
-            <h1 style="font-size: 40px;">🤍</h1>
+        <div class="content" style="padding-top: 60px;">
+            <span style="font-size: 50px;">🤍</span>
             <h1>Merci</h1>
-            <p class="description">Заказ принят. Проверьте почту.</p>
+            <p class="description">Ваш предзаказ принят. Подробности уже отправлены на вашу почту.</p>
             <button class="btn" onclick="tg.close()">Закрыть</button>
         </div>
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
-        let order = { version: '' };
+        tg.expand();
+        let order = { version: '', price: 0 };
+
         function nextStep(s) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('step' + s).classList.add('active');
+            window.scrollTo(0,0);
         }
-        function selectVersion(v, p) { order.version = v; nextStep(3); }
+
+        function selectVersion(v, p) {
+            order.version = v; order.price = p;
+            nextStep(3);
+        }
+
         function sendData() {
             const n = document.getElementById('name').value;
             const e = document.getElementById('email').value;
-            if(!n || !e) { tg.showAlert("Заполните поля"); return; }
-            tg.sendData(JSON.stringify({name: n, email: e, version: order.version}));
+            const p = document.getElementById('phone').value;
+
+            if(!n || !e || !p) {
+                tg.showAlert("Пожалуйста, заполните все поля");
+                return;
+            }
+
+            const result = { name: n, email: e, phone: p, version: order.version };
+            tg.sendData(JSON.stringify(result));
             nextStep(4);
         }
     </script>
