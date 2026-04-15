@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Дай себе год — Предзаказ</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
             --bg-color: #F5F5DC; /* Молочный/Бежевый */
             --text-color: #2B2B2B; /* Темно-коричневый */
             --accent-color: #2F4F4F; /* Темно-зеленый */
-            --btn-text: #FFFFFF;
+            --card-bg: rgba(255, 255, 255, 0.6);
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
@@ -21,100 +22,120 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
             text-align: center;
-        }
-
-        .page { display: none; width: 100%; max-width: 400px; animation: fadeIn 0.3s; }
-        .active { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        h1 { font-size: 24px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        p { font-size: 16px; line-height: 1.5; margin-bottom: 20px; }
-
-        .card {
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(0,0,0,0.1);
-        }
-
-        .price { font-weight: bold; font-size: 20px; color: var(--accent-color); margin: 10px 0; }
-
-        button {
-            background-color: var(--accent-color);
-            color: var(--btn-text);
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-            transition: transform 0.2s;
-        }
-
-        button:active { transform: scale(0.98); }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border: 1px solid #ccc;
             box-sizing: border-box;
         }
 
-        .small-text { font-size: 12px; color: #666; margin-top: 15px; }
+        .page { display: none; width: 100%; max-width: 400px; animation: fadeIn 0.4s ease; }
+        .active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        h1 { font-size: 26px; margin-top: 10px; text-transform: uppercase; letter-spacing: 2px; }
+        .subtitle { font-size: 16px; font-style: italic; margin-bottom: 30px; opacity: 0.8; }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .price { font-size: 22px; font-weight: bold; color: var(--accent-color); margin: 15px 0; }
+
+        button {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 18px 25px;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        button:active { transform: scale(0.96); opacity: 0.9; }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 12px;
+            border: 1px solid rgba(0,0,0,0.1);
+            background: white;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .small-text { font-size: 12px; line-height: 1.4; color: #666; margin-top: 20px; }
+        
+        ul { text-align: left; font-size: 14px; padding-left: 20px; margin: 15px 0; }
+        li { margin-bottom: 5px; }
+
     </style>
 </head>
 <body>
 
     <div id="step1" class="page active">
         <h1>Дай себе год</h1>
-        <p>Блокнот, который помогает навести порядок в голове и лучше понять себя</p>
+        <p class="subtitle">Блокнот, который помогает навести порядок в голове и лучше понять себя</p>
         <p><b>Предзаказ первой партии открыт</b></p>
         <button onclick="nextStep(2)">👉 Оформить предзаказ</button>
     </div>
 
     <div id="step2" class="page">
-        <h1>Выберите версию</h1>
-
+        <h1>Выбор версии</h1>
+        
         <div class="card">
             <h3>Color Edition</h3>
             <p>Премиальная версия с цветным оформлением</p>
+            <ul>
+                <li>Трекеры состояния</li>
+                <li>Планер на месяц</li>
+                <li>Тесты и практики</li>
+            </ul>
             <div class="price">49 €</div>
-            <button onclick="selectVersion('Color Edition', 49)">👉 Выбрать Color</button>
+            <button onclick="selectVersion('Color Edition', 49)">Выбрать Color</button>
         </div>
 
         <div class="card">
             <h3>Classic Edition</h3>
             <p>Минималистичная версия в чёрно-белом стиле</p>
+            <ul>
+                <li>Те же разделы и трекеры</li>
+                <li>Сдержанный формат</li>
+            </ul>
             <div class="price">39 €</div>
-            <button onclick="selectVersion('Classic Edition', 39)">👉 Выбрать Classic</button>
-        </div>
-
-        <p class="small-text">Содержание в обеих версиях одинаковое. Разница только в визуальном оформлении.</p>
+            <button onclick="selectVersion('Classic Edition', 39)">Выбрать Classic</button>
+        </div><p class="small-text">Содержание в обеих версиях одинаковое. Разница только в визуальном оформлении.</p>
     </div>
 
     <div id="step3" class="page">
-        <h1>Оформление</h1>
-        <p id="selected-info"></p>
+        <h1>Ваши данные</h1>
+        <p id="selected-info" style="font-weight: bold; color: var(--accent-color);"></p>
         <input type="text" id="name" placeholder="Имя">
         <input type="tel" id="phone" placeholder="Телефон">
         <input type="email" id="email" placeholder="Email (обязательно)">
-        <button onclick="submitOrder()">👉 Подтвердить предзаказ</button>
+        <button onclick="submitOrder()">Подтвердить предзаказ</button>
     </div>
 
     <div id="step4" class="page">
-        <h1>Спасибо 🤍</h1>
-        <p>Ты в первой партии блокнота «Дай себе год»</p>
+        <h1 style="font-size: 50px;">🤍</h1>
+        <h1>Спасибо!</h1>
+        <p>Ты в первой партии блокнота <br><b>«Дай себе год»</b></p>
         <p>Я свяжусь с тобой после завершения предзаказа и перед отправкой.</p>
+        <button onclick="closeApp()">Закрыть</button>
     </div>
 
     <script>
         let tg = window.Telegram.WebApp;
-        tg.expand();
+        tg.expand(); // Разворачиваем на весь экран
 
         let orderData = {
             version: '',
@@ -122,139 +143,15 @@
         };
 
         function nextStep(step) {
-            document.querySelectorAll('.<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        :root {
-            --bg-color: #F5F5DC; /* Молочный/Бежевый */
-            --text-color: #2B2B2B; /* Темно-коричневый */
-            --accent-color: #2F4F4F; /* Темно-зеленый */
-            --btn-text: #FFFFFF;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .page { display: none; width: 100%; max-width: 400px; animation: fadeIn 0.3s; }
-        .active { display: block; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        h1 { font-size: 24px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
-        p { font-size: 16px; line-height: 1.5; margin-bottom: 20px; }
-
-        .card {
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(0,0,0,0.1);
-        }
-
-        .price { font-weight: bold; font-size: 20px; color: var(--accent-color); margin: 10px 0; }
-
-        button {
-            background-color: var(--accent-color);
-            color: var(--btn-text);
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            font-size: 16px;
-            cursor: pointer;
-            width: 100%;
-            transition: transform 0.2s;
-        }
-
-        button:active { transform: scale(0.98); }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 10px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
-
-        .small-text { font-size: 12px; color: #666; margin-top: 15px; }
-    </style>
-</head>
-<body>
-
-    <div id="step1" class="page active">
-        <h1>Дай себе год</h1>
-        <p>Блокнот, который помогает навести порядок в голове и лучше понять себя</p>
-        <p><b>Предзаказ первой партии открыт</b></p>
-        <button onclick="nextStep(2)">👉 Оформить предзаказ</button>
-    </div>
-
-    <div id="step2" class="page">
-        <h1>Выберите версию</h1>
-
-        <div class="card">
-            <h3>Color Edition</h3>
-            <p>Премиальная версия с цветным оформлением</p>
-            <div class="price">49 €</div>
-            <button onclick="selectVersion('Color Edition', 49)">👉 Выбрать Color</button>
-        </div>
-
-        <div class="card">
-            <h3>Classic Edition</h3>
-            <p>Минималистичная версия в чёрно-белом стиле</p>
-            <div class="price">39 €</div>
-            <button onclick="selectVersion('Classic Edition', 39)">👉 Выбрать Classic</button>
-        </div>
-
-        <p class="small-text">Содержание в обеих версиях одинаковое. Разница только в визуальном оформлении.</p>
-    </div>
-
-    <div id="step3" class="page">
-        <h1>Оформление</h1>
-        <p id="selected-info"></p>
-        <input type="text" id="name" placeholder="Имя">
-        <input type="tel" id="phone" placeholder="Телефон">
-        <input type="email" id="email" placeholder="Email (обязательно)">
-        <button onclick="submitOrder()">👉 Подтвердить предзаказ</button>
-    </div>
-
-    <div id="step4" class="page">
-        <h1>Спасибо 🤍</h1>
-        <p>Ты в первой партии блокнота «Дай себе год»</p>
-        <p>Я свяжусь с тобой после завершения предзаказа и перед отправкой.</p>
-    </div>
-
-    <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();
-
-        let orderData = {
-            version: '',
-            price: 0
-        };
-
-        function nextStep(step) {
-            document.querySelectorAll('.
-page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('step' + step).classList.add('active');
+            window.scrollTo(0, 0); // Прокрутка вверх при смене экрана
         }
 
         function selectVersion(v, p) {
             orderData.version = v;
             orderData.price = p;
-            document.getElementById('selected-info').innerText = "Вы выбрали: " + v + " (" + p + "€)";
+            document.getElementById('selected-info').innerText = "Выбрано: " + v + " (" + p + "€)";
             nextStep(3);
         }
 
@@ -264,7 +161,7 @@ page').forEach(p => p.classList.remove('active'));
             const email = document.getElementById('email').value;
 
             if(!name  !phone  !email) {
-                alert("Пожалуйста, заполни все поля!");
+                tg.showAlert("Пожалуйста, заполни все поля!");
                 return;
             }
 
@@ -278,7 +175,13 @@ page').forEach(p => p.classList.remove('active'));
 
             // Отправляем данные в бота
             tg.sendData(JSON.stringify(finalData));
+            
+            // Если бот не закрылся автоматически (на десктопе бывает), показываем экран 4
             nextStep(4);
+        }
+
+        function closeApp() {
+            tg.close();
         }
     </script>
 </body>
