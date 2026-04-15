@@ -20,7 +20,6 @@
             display: flex; 
             flex-direction: column; 
             min-height: 100vh;
-            overflow-x: hidden;
         }
 
         .page { 
@@ -29,7 +28,6 @@
             max-width: 420px; 
             margin: 0 auto;
             flex-direction: column;
-            min-height: 100vh;
             animation: fadeIn 0.4s ease; 
         }
 
@@ -39,21 +37,25 @@
 
         .hero-img { 
             width: 100%; 
-            max-height: 40vh; 
+            max-height: 45vh; 
             object-fit: cover; 
             display: block;
         }
 
         .content { 
-            padding: 30px; 
+            padding: 25px; 
             text-align: center; 
-            flex-grow: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center; /* Центрируем всё по вертикали на телефоне */
+            align-items: center;
         }
 
-        h1 { font-weight: 300; text-transform: uppercase; letter-spacing: 4px; font-size: 18px; margin-bottom: 15px; }
+        /* Оставляем центрирование только для внутренних страниц, 
+           а на первой странице всё будет идти по порядку сверху вниз */
+        #step1 .content { justify-content: flex-start; }
+        #step2 .content, #step3 .content, #step4 .content { justify-content: center; min-height: 55vh; }
+
+        h1 { font-weight: 300; text-transform: uppercase; letter-spacing: 4px; font-size: 18px; margin: 20px 0 10px; }
         
         .description { 
             font-size: 14px; 
@@ -74,58 +76,32 @@
             letter-spacing: 2px; 
             cursor: pointer;
             border-radius: 2px;
-            transition: opacity 0.2s;
-        }
-        .btn:active { opacity: 0.8; }
-
-        .cards-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            text-align: left;
-            width: 100%;
         }
 
-        .card { 
-            background: #fff; 
-            padding: 20px; 
-            border: 1px solid #eee; 
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .card:active { background: #f9f9f9; transform: scale(0.98); }
-
+        .cards-container { width: 100%; display: flex; flex-direction: column; gap: 12px; text-align: left; }
+        .card { background: #fff; padding: 20px; border: 1px solid #eee; cursor: pointer; }
         .price { color: var(--accent); font-weight: 600; display: block; margin-bottom: 4px; font-size: 15px; }
         .card-title { font-weight: 600; font-size: 17px; margin: 0; }
-        .card-desc { font-size: 12px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
+        .card-desc { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
 
-        .input-group { width: 100%; margin-bottom: 15px; }
         input { 
-            width: 100%; 
-            border: none; 
-            border-bottom: 1px solid #ccc; 
-            background: transparent; 
-            padding: 12px 0; 
-            font-size: 16px; 
-            outline: none; 
-            transition: border-color 0.3s;
+            width: 100%; border: none; border-bottom: 1px solid #ccc; 
+            background: transparent; padding: 12px 0; font-size: 16px; 
+            margin-bottom: 20px; outline: none; 
         }
-        input:focus { border-bottom: 1px solid var(--text); }
-        
-        .success-icon { font-size: 50px; margin-bottom: 20px; display: block; }
     </style>
 </head>
 <body>
 
     <div id="step1" class="page active">
-        <img src="notepic.jpg" class="hero-img" alt="Notebook">
+        <img src="notepic.jpg" class="hero-img">
         <div class="content">
             <h1>Дай себе год</h1>
             <p class="description">
                 Блокнот для тех, кто ищет гармонию и ясность в каждом дне. 
                 Это пространство для ваших мыслей, целей и внутреннего спокойствия.
             </p>
-            <button class="btn" onclick="nextStep(2)">Выбрать издание</button>
+            <button class="btn" onclick="nextStep(2)">Сделать предзаказ</button>
         </div>
     </div>
 
@@ -136,13 +112,12 @@
                 <div class="card" onclick="selectVersion('Color Edition', 49)">
                     <span class="price">49.00 €</span>
                     <h3 class="card-title">Color Edition</h3>
-                    <p class="card-desc">Цветное оформление, твердый переплет и премиальная бумага. Для тех, кто любит эстетику в деталях.</p>
+                    <p class="card-desc">Цветное оформление, твердый переплет и премиальная бумага.</p>
                 </div>
-                
                 <div class="card" onclick="selectVersion('Classic Edition', 39)">
                     <span class="price">39.00 €</span>
                     <h3 class="card-title">Classic Edition</h3>
-                    <p class="card-desc">Черно-белый минимализм и мягкое покрытие. Строгость и фокус на самом главном.</p>
+                    <p class="card-desc">Черно-белый минимализм и мягкое покрытие.</p>
                 </div>
             </div>
         </div>
@@ -151,25 +126,18 @@
     <div id="step3" class="page">
         <div class="content">
             <h1>Ваши данные</h1>
-            <p class="description">Оставьте контакты, чтобы мы могли связаться с вами для подтверждения заказа.</p>
-            <div class="input-group">
-                <input type="text" id="name" placeholder="ИМЯ">
-            </div>
-            <div class="input-group">
-                <input type="email" id="email" placeholder="EMAIL">
-            </div>
-            <div class="input-group">
-                <input type="tel" id="phone" placeholder="ТЕЛЕФОН">
-            </div>
-            <button class="btn" onclick="sendData()">Подтвердить предзаказ</button>
+            <input type="text" id="name" placeholder="ВАШЕ ИМЯ">
+            <input type="email" id="email" placeholder="EMAIL">
+            <input type="tel" id="phone" placeholder="ТЕЛЕФОН">
+            <button class="btn" onclick="sendData()">Подтвердить</button>
         </div>
     </div>
 
     <div id="step4" class="page">
         <div class="content">
-            <span class="success-icon">🤍</span>
+            <span style="font-size: 50px; margin-bottom: 20px;">🤍</span>
             <h1>Merci</h1>
-            <p class="description">Ваш предзаказ принят. Подробности уже отправлены на вашу почту.</p>
+            <p class="description">Ваш предзаказ принят. Подробности уже на почте.</p>
             <button class="btn" onclick="tg.close()">Закрыть</button>
         </div>
     </div>
@@ -177,21 +145,16 @@
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
-        
-        let order = {
-            version: '',
-            price: 0
-        };
+        let order = { version: '' };
 
         function nextStep(s) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById('step' + s).classList.add('active');
-            window.scrollTo(0, 0);
+            window.scrollTo(0,0);
         }
 
         function selectVersion(v, p) {
             order.version = v;
-            order.price = p;
             nextStep(3);
         }
 
@@ -199,23 +162,8 @@
             const n = document.getElementById('name').value;
             const e = document.getElementById('email').value;
             const p = document.getElementById('phone').value;
-
-            if (!n || !e || !p) {
-                tg.showAlert("Пожалуйста, заполните все поля");
-                return;
-            }
-
-            const result = {
-                name: n,
-                email: e,
-                phone: p,
-                version: order.version
-            };
-
-            // Отправляем JSON строку в бота
-            tg.sendData(JSON.stringify(result));
-            
-            // Показываем экран благодарности
+            if(!n || !e || !p) { tg.showAlert("Заполните все поля"); return; }
+            tg.sendData(JSON.stringify({name: n, email: e, phone: p, version: order.version}));
             nextStep(4);
         }
     </script>
