@@ -113,7 +113,9 @@
             </ul>
             <div class="price">39 €</div>
             <button onclick="selectVersion('Classic Edition', 39)">Выбрать Classic</button>
-        </div><p class="small-text">Содержание в обеих версиях одинаковое. Разница только в визуальном оформлении.</p>
+        </div>
+
+        <p class="small-text">Содержание в обеих версиях одинаковое. Разница только в визуальном оформлении.</p>
     </div>
 
     <div id="step3" class="page">
@@ -160,7 +162,7 @@
             const phone = document.getElementById('phone').value;
             const email = document.getElementById('email').value;
 
-            if(!name  !phone  !email) {
+            if(!name || !phone || !email) {
                 tg.showAlert("Пожалуйста, заполни все поля!");
                 return;
             }
