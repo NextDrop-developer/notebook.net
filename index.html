@@ -17,8 +17,7 @@
             color: var(--text); 
             margin: 0; 
             padding: 0; 
-            display: flex; 
-            flex-direction: column; 
+            display: block; /* Убрал flex отсюда, чтобы не тянуло контент */
             min-height: 100vh;
         }
 
@@ -27,35 +26,32 @@
             width: 100%; 
             max-width: 420px; 
             margin: 0 auto;
-            flex-direction: column;
             animation: fadeIn 0.4s ease; 
         }
 
-        .active { display: flex; }
+        .active { display: block; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         .hero-img { 
             width: 100%; 
-            max-height: 45vh; 
+            max-height: 50vh; 
             object-fit: cover; 
             display: block;
         }
 
         .content { 
-            padding: 25px; 
+            padding: 20px 25px; /* Уменьшил верхний отступ */
             text-align: center; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
-        /* Оставляем центрирование только для внутренних страниц, 
-           а на первой странице всё будет идти по порядку сверху вниз */
-        #step1 .content { justify-content: flex-start; }
-        #step2 .content, #step3 .content, #step4 .content { justify-content: center; min-height: 55vh; }
-
-        h1 { font-weight: 300; text-transform: uppercase; letter-spacing: 4px; font-size: 18px; margin: 20px 0 10px; }
+        h1 { 
+            font-weight: 300; 
+            text-transform: uppercase; 
+            letter-spacing: 4px; 
+            font-size: 18px; 
+            margin: 10px 0 15px; /* Сжал отступы вокруг заголовка */
+        }
         
         .description { 
             font-size: 14px; 
@@ -78,7 +74,7 @@
             border-radius: 2px;
         }
 
-        .cards-container { width: 100%; display: flex; flex-direction: column; gap: 12px; text-align: left; }
+        .cards-container { display: flex; flex-direction: column; gap: 12px; text-align: left; margin-top: 10px; }
         .card { background: #fff; padding: 20px; border: 1px solid #eee; cursor: pointer; }
         .price { color: var(--accent); font-weight: 600; display: block; margin-bottom: 4px; font-size: 15px; }
         .card-title { font-weight: 600; font-size: 17px; margin: 0; }
