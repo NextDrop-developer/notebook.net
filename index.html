@@ -18,7 +18,6 @@
             min-height: 100vh;
         }
 
-        /* ПЕРВАЯ СТРАНИЦА: ОБЫЧНЫЙ СПИСОК (СВЕРХУ ВНИЗ) */
         #step1 { 
             display: none; 
             width: 100%; 
@@ -27,7 +26,6 @@
         }
         #step1.active { display: block !important; }
 
-        /* ОСТАЛЬНЫЕ: ЦЕНТРИРУЕМ ВЕСЬ ЭКРАН */
         .centered-page { 
             display: none; 
             width: 100%; 
@@ -50,57 +48,133 @@
 
         .content { width: 100%; padding: 20px 25px; text-align: center; }
 
-        h1 { font-weight: 300; text-transform: uppercase; letter-spacing: 4px; font-size: 18px; margin-bottom: 8px; }
-        .description { font-size: 14px; color: var(--muted); line-height: 1.5; margin-bottom: 25px; }
+        h1 { font-weight: 300; text-transform: uppercase; letter-spacing: 4px; font-size: 18px; margin-bottom: 12px; }
 
-        .btn { 
-            background: var(--text); color: #fff; border: none; padding: 18px; width: 100%; 
-            font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; 
-            cursor: pointer; border-radius: 2px;
+        .description { 
+            font-size: 14px; 
+            color: var(--muted); 
+            line-height: 1.6; 
+            margin-bottom: 25px; 
+            text-align: left;
         }
 
-        .cards-container { display: flex; flex-direction: column; gap: 12px; text-align: left; width: 100%; }
-        .card { background: #fff; padding: 20px; border: 1px solid #eee; cursor: pointer; }
-        .price { color: var(--accent); font-weight: 600; font-size: 15px; display: block; margin-bottom: 4px; }
+        .btn { 
+            background: var(--text); 
+            color: #fff; 
+            border: none; 
+            padding: 18px; 
+            width: 100%; 
+            font-size: 13px; 
+            font-weight: 600; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            cursor: pointer; 
+            border-radius: 2px;
+        }
+
+        .cards-container { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+            text-align: left; 
+            width: 100%; 
+        }
+
+        .card { 
+            background: #fff; 
+            padding: 20px; 
+            border: 1px solid #eee; 
+            cursor: pointer; 
+        }
+
+        .price { 
+            color: var(--accent); 
+            font-weight: 600; 
+            font-size: 15px; 
+            display: block; 
+            margin-bottom: 4px; 
+        }
+
         .card-title { font-size: 17px; font-weight: 600; }
-        .card-desc { font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.4; }
+
+        .card-desc { 
+            font-size: 12px; 
+            color: var(--muted); 
+            margin-top: 5px; 
+            line-height: 1.5; 
+        }
         
         input { 
-            width: 100%; border: none; border-bottom: 1px solid #ccc; 
-            background: transparent; padding: 15px 0; font-size: 16px; 
-            margin-bottom: 20px; outline: none;
+            width: 100%; 
+            border: none; 
+            border-bottom: 1px solid #ccc; 
+            background: transparent; 
+            padding: 15px 0; 
+            font-size: 16px; 
+            margin-bottom: 20px; 
+            outline: none;
         }
     </style>
 </head>
 <body>
 
+    <!-- STEP 1 -->
     <div id="step1" class="active">
         <img src="notepic.jpg" class="hero-img">
         <div class="content">
-            <h1>Дай себе год</h1>
-            <p class="description">Блокнот для тех, кто ищет гармонию и ясность в каждом дне. Пространство для ваших мыслей.</p>
+            <h1>ДАЙ СЕБЕ ГОД</h1>
+            <p class="description">
+                Не для чужих ожиданий.<br>
+                А чтобы наконец услышать себя.<br><br>
+
+                Я создала этот блокнот в момент, когда сама не понимала, куда иду.<br>
+                Он стал местом, где многое начало вставать на свои места.<br><br>
+
+                Это пространство, где ты сможешь разложить всё по полочкам:<br>
+                мысли, чувства, желания.<br>
+                Без давления. В своём темпе.<br><br>
+
+                Тихое пространство только для тебя,<br>
+                где ты перестанешь теряться в мыслях<br>
+                и начнёшь понимать, чего хочешь на самом деле.<br><br>
+
+                Теперь — это пространство для тебя. 💛
+            </p>
             <button class="btn" onclick="nextStep(2)">Сделать предзаказ</button>
         </div>
     </div>
 
+    <!-- STEP 2 -->
     <div id="step2" class="centered-page">
         <div class="content">
             <h1>Издание</h1>
             <div class="cards-container">
+
                 <div class="card" onclick="selectVersion('Color Edition', 49)">
                     <span class="price">49.00 €</span>
                     <h3 class="card-title">Color Edition</h3>
-                    <p class="card-desc">Цветное оформление, твердый переплет и премиальная бумага.</p>
+                    <p class="card-desc">
+                        Цветное оформление, твёрдый переплёт и плотная премиальная бумага.<br><br>
+                        Цена первого тиража. Количество ограничено.<br>
+                        Далее — 55 €
+                    </p>
                 </div>
+
                 <div class="card" onclick="selectVersion('Classic Edition', 39)">
                     <span class="price">39.00 €</span>
                     <h3 class="card-title">Classic Edition</h3>
-                    <p class="card-desc">Черно-белый минимализм и мягкое покрытие.</p>
+                    <p class="card-desc">
+                        Чёрно-белая версия с тем же содержанием и структурой.<br><br>
+                        Цена первого тиража. Количество ограничено.<br>
+                        Далее — 45 €
+                    </p>
                 </div>
+
             </div>
         </div>
     </div>
 
+    <!-- STEP 3 -->
     <div id="step3" class="centered-page">
         <div class="content">
             <h1>Данные</h1>
@@ -111,11 +185,12 @@
         </div>
     </div>
 
+    <!-- STEP 4 -->
     <div id="step4" class="centered-page">
         <div class="content">
             <span style="font-size: 50px; display: block; margin-bottom: 20px;">🤍</span>
             <h1>Merci</h1>
-            <p class="description">Заказ принят. Проверьте почту.</p>
+            <p class="description" style="text-align:center;">Заказ принят. Проверьте почту.</p>
             <button class="btn" onclick="tg.close()">Закрыть</button>
         </div>
     </div>
@@ -123,6 +198,7 @@
     <script>
         let tg = window.Telegram.WebApp;
         tg.expand();
+
         let order = { version: '' };
 
         function nextStep(s) {
@@ -140,10 +216,22 @@
             const n = document.getElementById('name').value;
             const e = document.getElementById('email').value;
             const p = document.getElementById('phone').value;
-            if(!n || !e || !p) { tg.showAlert("Заполните поля"); return; }
-            tg.sendData(JSON.stringify({name: n, email: e, phone: p, version: order.version}));
+
+            if(!n  !e  !p) {
+                tg.showAlert("Заполните все поля");
+                return;
+            }
+
+            tg.sendData(JSON.stringify({
+                name: n,
+                email: e,
+                phone: p,
+                version: order.version
+            }));
+
             nextStep(4);
         }
     </script>
+
 </body>
 </html>
