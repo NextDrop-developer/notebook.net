@@ -5,10 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Дай себе год</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
         
-        :root { --bg: #F9F8F3; --text: #1C1C1C; --muted: #8E8E93; --accent: #2F4F4F; }
+        :root { 
+            --bg: #F9F8F3; 
+            --text: #1C1C1C; 
+            --muted: #8E8E93; 
+            --accent: #2F4F4F; 
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body { 
@@ -24,6 +31,7 @@
             max-width: 420px; 
             margin: 0 auto; 
         }
+
         #step1.active { display: block !important; }
 
         .centered-page { 
@@ -36,25 +44,39 @@
             justify-content: center; 
             align-items: center; 
         }
+
         .centered-page.active { display: flex !important; }
 
         .hero-img { 
             width: 100%; 
             height: auto; 
-            max-height: 48vh; 
+            max-height: 38vh; 
             object-fit: cover; 
             display: block; 
         }
 
-        .content { width: 100%; padding: 20px 25px; text-align: center; }
+        .content { 
+            width: 100%; 
+            padding: 20px 25px; 
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
 
-        h1 { font-weight: 300; text-transform: uppercase; letter-spacing: 4px; font-size: 18px; margin-bottom: 12px; }
+        h1 { 
+            font-weight: 300; 
+            text-transform: uppercase; 
+            letter-spacing: 4px; 
+            font-size: 18px; 
+            margin-bottom: 12px; 
+        }
 
         .description { 
             font-size: 14px; 
             color: var(--muted); 
             line-height: 1.6; 
-            margin-bottom: 25px; 
+            margin-bottom: 20px; 
             text-align: left;
         }
 
@@ -63,13 +85,15 @@
             color: #fff; 
             border: none; 
             padding: 18px; 
-            width: 100%; 
+            width: 80%; 
+            max-width: 280px;
             font-size: 13px; 
             font-weight: 600; 
             text-transform: uppercase; 
             letter-spacing: 2px; 
             cursor: pointer; 
             border-radius: 2px;
+            margin: 20px 0;
         }
 
         .cards-container { 
@@ -95,7 +119,10 @@
             margin-bottom: 4px; 
         }
 
-        .card-title { font-size: 17px; font-weight: 600; }
+        .card-title { 
+            font-size: 17px; 
+            font-weight: 600; 
+        }
 
         .card-desc { 
             font-size: 12px; 
@@ -116,122 +143,126 @@
         }
     </style>
 </head>
+
 <body>
 
-    <!-- STEP 1 -->
-    <div id="step1" class="active">
-        <img src="katya.jpg" class="hero-img">
-        <div class="content">
-            <h1>ДАЙ СЕБЕ ГОД</h1>
-            <p class="description">
-                Не для чужих ожиданий.<br>
-                А чтобы наконец услышать себя.<br><br>
+<!-- STEP 1 -->
+<div id="step1" class="active">
+    <img src="katya.jpg" class="hero-img">
+    
+    <div class="content">
+        <h1>ДАЙ СЕБЕ ГОД</h1>
 
-                Я создала этот блокнот в момент, когда сама не понимала, куда иду.<br>
-                Он стал местом, где многое начало вставать на свои места.<br><br>
+        <p class="description">
+            Не для чужих ожиданий.<br>
+            А чтобы наконец услышать себя.<br><br>
 
-                Это пространство, где ты сможешь разложить всё по полочкам:<br>
-                мысли, чувства, желания.<br>
-                Без давления. В своём темпе.<br><br>
+            Я создала этот блокнот в момент, когда сама не понимала, куда иду.
+        </p>
 
-                Тихое пространство только для тебя,<br>
-                где ты перестанешь теряться в мыслях<br>
-                и начнёшь понимать, чего хочешь на самом деле.<br><br>
+        <button class="btn" onclick="nextStep(2)">Сделать предзаказ</button>
 
-                Теперь — это пространство для тебя. 💛
-            </p>
-            <button class="btn" onclick="nextStep(2)">Сделать предзаказ</button>
-        </div>
+        <p class="description">
+            Это пространство, где ты сможешь разложить всё по полочкам:
+            мысли, чувства, желания.<br>
+            Без давления. В своём темпе.<br><br>
+
+            Тихое пространство только для тебя,
+            где ты перестанешь теряться в мыслях
+            и начнёшь понимать, чего хочешь на самом деле.<br><br>
+
+            Теперь — это пространство для тебя. 💛
+        </p>
     </div>
+</div>
 
-    <!-- STEP 2 -->
-    <div id="step2" class="centered-page">
-        <div class="content">
-            <h1>Издание</h1>
-            <div class="cards-container">
+<!-- STEP 2 -->
+<div id="step2" class="centered-page">
+    <div class="content">
+        <h1>Издание</h1>
 
-                <div class="card" onclick="selectVersion('Color Edition', 49)">
-                    <span class="price">49.00 €</span>
-                    <h3 class="card-title">Color Edition</h3>
-                    <p class="card-desc">
-                        Цветное оформление, твёрдый переплёт и плотная премиальная бумага.<br><br>
-                        Цена первого тиража. Количество ограничено.<br>
-                        Далее — 55 €
-                    </p>
-                </div>
+        <div class="cards-container">
+            <div class="card" onclick="selectVersion('Color Edition', 49)">
+                <span class="price">49.00 €</span>
+                <h3 class="card-title">Color Edition</h3>
+                <p class="card-desc">
+                    Цветное оформление, твёрдый переплёт и плотная премиальная бумага.<br><br>
+                    Цена первого тиража. Количество ограничено.<br>
+                    Далее — 55 €
+                </p>
+            </div>
 
-                <div class="card" onclick="selectVersion('Classic Edition', 39)">
-                    <span class="price">39.00 €</span>
-                    <h3 class="card-title">Classic Edition</h3>
-                    <p class="card-desc">
-                        Чёрно-белая версия с тем же содержанием и структурой.<br><br>
-                        Цена первого тиража. Количество ограничено.<br>
-                        Далее — 45 €
-                    </p>
-                </div>
-
+            <div class="card" onclick="selectVersion('Classic Edition', 39)">
+                <span class="price">39.00 €</span>
+                <h3 class="card-title">Classic Edition</h3>
+                <p class="card-desc">
+                    Чёрно-белая версия с тем же содержанием и структурой.<br><br>
+                    Цена первого тиража. Количество ограничено.<br>
+                    Далее — 45 €
+                </p>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- STEP 3 -->
-    <div id="step3" class="centered-page">
-        <div class="content">
-            <h1>Данные</h1>
-            <input type="text" id="name" placeholder="ИМЯ">
-            <input type="email" id="email" placeholder="EMAIL">
-            <input type="tel" id="phone" placeholder="ТЕЛЕФОН">
-            <button class="btn" onclick="sendData()">Подтвердить</button>
-        </div>
+<!-- STEP 3 -->
+<div id="step3" class="centered-page">
+    <div class="content">
+        <h1>Данные</h1>
+        <input type="text" id="name" placeholder="ИМЯ">
+        <input type="email" id="email" placeholder="EMAIL">
+        <input type="tel" id="phone" placeholder="ТЕЛЕФОН">
+        <button class="btn" onclick="sendData()">Подтвердить</button>
     </div>
+</div>
 
-    <!-- STEP 4 -->
-    <div id="step4" class="centered-page">
-        <div class="content">
-            <span style="font-size: 50px; display: block; margin-bottom: 20px;">🤍</span>
-            <h1>Merci</h1>
-            <p class="description" style="text-align:center;">Заказ принят. Проверьте почту.</p>
-            <button class="btn" onclick="tg.close()">Закрыть</button>
-        </div>
+<!-- STEP 4 -->
+<div id="step4" class="centered-page">
+    <div class="content">
+        <span style="font-size: 50px; margin-bottom: 20px;">🤍</span>
+        <h1>Merci</h1>
+        <p class="description" style="text-align:center;">Заказ принят. Проверьте почту.</p>
+        <button class="btn" onclick="tg.close()">Закрыть</button>
     </div>
+</div>
 
-    <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();
+<script>
+let tg = window.Telegram.WebApp;
+tg.expand();
 
-        let order = { version: '' };
+let order = { version: '' };
 
-        function nextStep(s) {
-            document.querySelectorAll('#step1, .centered-page').forEach(p => p.classList.remove('active'));
-            document.getElementById('step' + s).classList.add('active');
-            window.scrollTo(0,0);
-        }
+function nextStep(s) {
+    document.querySelectorAll('#step1, .centered-page').forEach(p => p.classList.remove('active'));
+    document.getElementById('step' + s).classList.add('active');
+    window.scrollTo(0, 0);
+}
 
-        function selectVersion(v, p) {
-            order.version = v;
-            nextStep(3);
-        }
+function selectVersion(v, p) {
+    order.version = v;
+    nextStep(3);
+}
 
-        function sendData() {
-            const n = document.getElementById('name').value;
-            const e = document.getElementById('email').value;
-            const p = document.getElementById('phone').value;
+function sendData() {
+    const n = document.getElementById('name').value;
+    const e = document.getElementById('email').value;
+    const p = document.getElementById('phone').value;
 
-            if(!n  !e  !p) {
-                tg.showAlert("Заполните все поля");
-                return;
-            }
+    if (!n || !e || !p) {
+        tg.showAlert("Заполните все поля");
+        return;
+    }
 
-            tg.sendData(JSON.stringify({
-                name: n,
-                email: e,
-                phone: p,
-                version: order.version
-            }));
+    tg.sendData(JSON.stringify({
+        name: n,
+        email: e,
+        phone: p,
+        version: order.version
+    }));
 
-            nextStep(4);
-        }
-    </script>
+    nextStep(4);
+}
+</script>
 
 </body>
 </html>
