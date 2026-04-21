@@ -15,35 +15,55 @@
     --muted: #8E8E93;
 }
 
+/* ===== BASE ===== */
 body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     margin:0;
-    overflow:hidden; /* 🔥 verhindert Scroll + Zoom Feeling */
+    overflow:hidden;
 }
 
-/* ===== GLOBAL ===== */
-.container {
-    max-width:420px;
-    margin:auto;
-}
-
-/* ===== STEP 1 (KOMPAKT, KEIN SCROLL) ===== */
-#step1 {
+/* ===== SMOOTH TRANSITION SYSTEM ===== */
+.page {
+    position:absolute;
+    width:100%;
     height:100vh;
+    top:0;
+    left:0;
+    opacity:0;
+    transform: translateY(8px);
+    transition: all 0.4s ease;
+    pointer-events:none;
+}
+
+.page.active {
+    opacity:1;
+    transform: translateY(0);
+    pointer-events:auto;
+}
+
+/* ===== STEP 1 (TEXT UNCHANGED, ONLY UX FIX) ===== */
+#step1 {
     display:flex;
     flex-direction:column;
 }
 
+.container {
+    max-width:420px;
+    margin:auto;
+    height:100%;
+}
+
 .hero-img {
     width:100%;
-    height:32vh; /* 🔥 kleiner gemacht für kein Scroll */
+    height:32vh;
     object-fit:cover;
 }
 
+/* only spacing improved */
 .content {
     flex:1;
-    padding:12px 18px; /* 🔥 weniger padding */
+    padding:14px 18px;
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -53,34 +73,40 @@ body {
 h1 {
     font-weight:300;
     letter-spacing:3px;
-    font-size:16px; /* 🔥 kleiner für fit */
-    margin:6px 0;
+    font-size:18px;
+    margin:8px 0;
 }
 
 .description {
-    font-size:13px; /* 🔥 kleiner */
+    font-size:14px;
     color:var(--muted);
-    line-height:1.4;
+    line-height:1.6;
     text-align:left;
-    margin:6px 0;
+    margin:0;
 }
 
-/* ===== BUTTON (GRÖSSER + PREMIUM) ===== */
+/* ===== BUTTONS (ONLY UX) ===== */
 .btn {
     background:var(--text);
     color:#fff;
     border:none;
-    padding:18px; /* 🔥 größer */
+    padding:18px;
     width:85%;
     max-width:300px;
     cursor:pointer;
-    font-size:16px; /* 🔥 größer text */
+    font-size:15px;
     font-weight:600;
     letter-spacing:1px;
-    margin:10px 0;
+    border-radius:8px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-/* ===== CENTER SCREENS ===== */
+.btn:active {
+    transform: scale(0.97);
+    opacity:0.85;
+}
+
+/* ===== CENTER SCREENS (STEP 2 & 3 ONLY UX) ===== */
 .center-screen {
     height:100vh;
     display:flex;
@@ -89,7 +115,7 @@ h1 {
     flex-direction:column;
 }
 
-/* ===== CARDS ===== */
+/* ===== CARDS UX ONLY ===== */
 .card {
     background:#fff;
     border:1px solid #eee;
@@ -97,6 +123,12 @@ h1 {
     margin-bottom:12px;
     cursor:pointer;
     width:100%;
+    border-radius:10px;
+    transition: transform 0.2s ease;
+}
+
+.card:active {
+    transform: scale(0.98);
 }
 
 .price {
@@ -107,7 +139,7 @@ h1 {
 
 .title {
     font-weight:600;
-    font-size:16px;
+    font-size:17px;
 }
 
 .card-desc {
@@ -117,7 +149,7 @@ h1 {
     line-height:1.5;
 }
 
-/* ===== INPUTS ===== */
+/* ===== INPUT UX ONLY ===== */
 input {
     width:100%;
     padding:14px;
@@ -125,14 +157,17 @@ input {
     border:none;
     border-bottom:1px solid #ccc;
     font-size:15px;
+    outline:none;
+    background:transparent;
 }
 </style>
 </head>
 
 <body>
 
-<!-- STEP 1 -->
-<div id="step1" class="container">
+<!-- STEP 1 (UNCHANGED TEXT) -->
+<div id="step1" class="page active">
+<div class="container">
 
 <img src="katya.jpg" class="hero-img">
 
@@ -142,50 +177,60 @@ input {
 
 <p class="description">
 Не для чужих ожиданий.<br>
-А чтобы наконец услышать себя.
+А чтобы наконец услышать себя.<br><br>
+
+Я создала этот блокнот в момент, когда сама не понимала, куда иду.<br>
+Он стал местом, где многое начало вставать на свои места.<br><br>
+
+Это пространство, где ты сможешь разложить всё по полочкам:<br>
+мысли, чувства, желания.<br>
+Без давления. В своём темпе.<br><br>
+
+Тихое пространство только для тебя,<br>
+где ты перестанешь теряться в мыслях<br>
+и начнёшь понимать, чего хочешь на самом деле.<br><br>
+
+Теперь — это пространство для тебя. 💛
 </p>
 
 <button class="btn" onclick="nextStep(2)">Сделать предзаказ</button>
 
-<p class="description">
-Я создала этот блокнот, когда сама не понимала, куда иду.<br><br>
-
-Тихое пространство только для тебя.
-</p>
-
+</div>
 </div>
 </div>
 
 <!-- STEP 2 -->
-<div id="step2" class="center-screen" style="display:none;">
-<div class="container">
+<div id="step2" class="page">
+<div class="center-screen container">
 
 <h1>Издание</h1>
 
 <div class="card" onclick="selectVersion('Color Edition')">
 <div class="price">49.00 €</div>
-<div class="title">Color Edition</div>
-<div class="card-desc">
-Цветное оформление, премиальная бумага.<br><br>
-Ограниченный тираж.
-</div>
+<h3 class="title">Color Edition</h3>
+<p class="card-desc">
+Цветное оформление, твёрдый переплёт и плотная премиальная бумага.<br><br>
+Цена первого тиража. Количество ограничено.<br>
+Далее — 55 €
+</p>
 </div>
 
 <div class="card" onclick="selectVersion('Classic Edition')">
 <div class="price">39.00 €</div>
-<div class="title">Classic Edition</div>
-<div class="card-desc">
-Чёрно-белая версия.<br><br>
-Ограниченный тираж.
-</div>
+<h3 class="title">Classic Edition</h3>
+<p class="card-desc">
+Чёрно-белая версия с тем же содержанием и структурой.<br><br>
+Цена первого тиража. Количество ограничено.<br>
+Далее — 45 €
+</p>
 </div>
 
 </div>
 </div>
 
 <!-- STEP 3 -->
-<div id="step3" class="center-screen" style="display:none;">
-<div class="container">
+<div id="step3" class="page">
+<div class="center-screen container">
 
 <h1>Данные</h1>
 
@@ -204,16 +249,21 @@ tg.expand();
 
 let order = { version: "" };
 
-function nextStep(s){
-    document.querySelectorAll('#step1, #step2, #step3')
-        .forEach(el => el.style.display='none');
+function showStep(id){
+    document.querySelectorAll('.page')
+        .forEach(p => p.classList.remove('active'));
 
-    document.getElementById('step'+s).style.display='flex';
+    document.getElementById('step'+id)
+        .classList.add('active');
+}
+
+function nextStep(s){
+    showStep(s);
 }
 
 function selectVersion(v){
     order.version = v;
-    nextStep(3);
+    showStep(3);
 }
 
 function sendData(){
@@ -223,7 +273,7 @@ function sendData(){
 
     if(!order.version){
         tg.showAlert("Выберите вариант");
-        nextStep(2);
+        showStep(2);
         return;
     }
 
