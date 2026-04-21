@@ -23,7 +23,7 @@ body {
     overflow:hidden;
 }
 
-/* ===== SMOOTH TRANSITION SYSTEM ===== */
+/* ===== PAGE TRANSITION ===== */
 .page {
     position:absolute;
     width:100%;
@@ -42,16 +42,17 @@ body {
     pointer-events:auto;
 }
 
-/* ===== STEP 1 (TEXT UNCHANGED, ONLY UX FIX) ===== */
-#step1 {
-    display:flex;
-    flex-direction:column;
-}
-
+/* ===== GENERAL ===== */
 .container {
     max-width:420px;
     margin:auto;
     height:100%;
+}
+
+/* ===== STEP 1 ===== */
+#step1 {
+    display:flex;
+    flex-direction:column;
 }
 
 .hero-img {
@@ -60,7 +61,6 @@ body {
     object-fit:cover;
 }
 
-/* only spacing improved */
 .content {
     flex:1;
     padding:14px 18px;
@@ -68,13 +68,6 @@ body {
     flex-direction:column;
     align-items:center;
     justify-content:space-between;
-}
-
-h1 {
-    font-weight:300;
-    letter-spacing:3px;
-    font-size:18px;
-    margin:8px 0;
 }
 
 .description {
@@ -85,7 +78,7 @@ h1 {
     margin:0;
 }
 
-/* ===== BUTTONS (ONLY UX) ===== */
+/* BUTTON */
 .btn {
     background:var(--text);
     color:#fff;
@@ -106,7 +99,7 @@ h1 {
     opacity:0.85;
 }
 
-/* ===== CENTER SCREENS (STEP 2 & 3 ONLY UX) ===== */
+/* ===== CENTER SCREENS ===== */
 .center-screen {
     height:100vh;
     display:flex;
@@ -115,7 +108,7 @@ h1 {
     flex-direction:column;
 }
 
-/* ===== CARDS UX ONLY ===== */
+/* CARDS */
 .card {
     background:#fff;
     border:1px solid #eee;
@@ -149,7 +142,7 @@ h1 {
     line-height:1.5;
 }
 
-/* ===== INPUT UX ONLY ===== */
+/* INPUT */
 input {
     width:100%;
     padding:14px;
@@ -157,15 +150,15 @@ input {
     border:none;
     border-bottom:1px solid #ccc;
     font-size:15px;
-    outline:none;
     background:transparent;
+    outline:none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- STEP 1 (UNCHANGED TEXT) -->
+<!-- STEP 1 (ONLY CHANGED LAYOUT TEXT) -->
 <div id="step1" class="page active">
 <div class="container">
 
@@ -173,27 +166,24 @@ input {
 
 <div class="content">
 
-<h1>ДАЙ СЕБЕ ГОД</h1>
-
+<!-- TOP TEXT -->
 <p class="description">
 Не для чужих ожиданий.<br>
-А чтобы наконец услышать себя.<br><br>
-
-Я создала этот блокнот в момент, когда сама не понимала, куда иду.<br>
-Он стал местом, где многое начало вставать на свои места.<br><br>
-
-Это пространство, где ты сможешь разложить всё по полочкам:<br>
-мысли, чувства, желания.<br>
-Без давления. В своём темпе.<br><br>
-
-Тихое пространство только для тебя,<br>
-где ты перестанешь теряться в мыслях<br>
-и начнёшь понимать, чего хочешь на самом деле.<br><br>
-
-Теперь — это пространство для тебя. 💛
+А чтобы наконец услышать себя.<br>
+Я создала этот блокнот в момент, когда сама не понимала, куда иду.
 </p>
 
+<!-- CENTER BUTTON -->
 <button class="btn" onclick="nextStep(2)">Сделать предзаказ</button>
+
+<!-- BOTTOM TEXT -->
+<p class="description">
+Он стал местом, где многое начало вставать на свои места.<br>
+Это пространство, где ты сможешь разложить всё по полочкам: мысли, чувства, желания.<br>
+Без давления. В своём темпе.<br>
+Тихое пространство только для тебя, где ты перестанешь теряться в мыслях и начнёшь понимать, чего хочешь на самом деле.<br>
+Теперь — это пространство для тебя. 💛
+</p>
 
 </div>
 </div>
@@ -207,7 +197,7 @@ input {
 
 <div class="card" onclick="selectVersion('Color Edition')">
 <div class="price">49.00 €</div>
-<h3 class="title">Color Edition</h3>
+<div class="title">Color Edition</div>
 <p class="card-desc">
 Цветное оформление, твёрдый переплёт и плотная премиальная бумага.<br><br>
 Цена первого тиража. Количество ограничено.<br>
@@ -217,7 +207,7 @@ input {
 
 <div class="card" onclick="selectVersion('Classic Edition')">
 <div class="price">39.00 €</div>
-<h3 class="title">Classic Edition</h3>
+<div class="title">Classic Edition</div>
 <p class="card-desc">
 Чёрно-белая версия с тем же содержанием и структурой.<br><br>
 Цена первого тиража. Количество ограничено.<br>
