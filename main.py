@@ -2,6 +2,7 @@ import os
 import json
 import smtplib
 import asyncio
+import random
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -43,30 +44,50 @@ async def send_async(*args):
 # ===== HANDLER =====
 @dp.message(F.content_type == ContentType.WEB_APP_DATA)
 async def handle_data(message: types.Message):
-    data = json.loads(message.web_app_data.data)
+    try:
+        data = json.loads(message.web_app_data.data)
 
-    name = data.get("name")
-    email = data.get("email")
-    phone = data.get("phone")
+        name = data.get("name")
+        email = data.get("email")
+        phone = data.get("phone")
+        version = data.get("version")
 
-    # ---- EMAIL AN KUNDEN ----
-    client_body = f"""
-    <h2>Спасибо, {name}!</h2>
-    <p>Ваш заказ принят 🤍</p>
-    """
+        order_id = random.randint(10000, 99999)
 
-    # ---- EMAIL AN MANAGER ----
-    manager_body = f"""
-    <h2>Новый заказ</h2>
-    <p>Имя: {name}</p>
-    <p>Email: {email}</p>
-    <p>Телефон: {phone}</p>
-    """
+        # ---- CLIENT EMAIL ----
+        client_body = f"""
+        <h2>Спасибо, {name}!</h2>
+        <p>Ваш предзаказ принят 🤍</p>
+        <p><b>Номер заказа:</b> #{order_id}</p>
+        <p>Мы скоро свяжемся с вами.</p>
+        """
 
-    await send_async(email, "Подтверждение заказа", client_body)
-    await send_async(MANAGER_EMAIL, "Новый заказ", manager_body)
+        # ---- MANAGER EMAIL ----
+        manager_body = f"""
+        <h2>🛒 Новый заказ</h2>
 
-    await message.answer("Спасибо! Проверьте почту ✨")
+        <p><b>ID:</b> #{order_id}</p>
+        <p><b>Имя:</b> {name}</p>
+        <p><b>Email:</b> {email}</p>
+        <p><b>Телефон:</b> {phone}</p>
+        <p><b>Продукт:</b> {version}</p>
+
+        <hr>
+
+        <p><b>Telegram ID:</b> {message.from_user.id}</p>
+        <p><b>Username:</b> @{message.from_user.username}</p>
+
+        <p><b>Дата:</b> {message.date}</p>
+        """
+
+        await send_async(email, "Подтверждение заказа", client_body)
+        await send_async(MANAGER_EMAIL, "Новый заказ", manager_body)
+
+        await message.answer(f"Спасибо, {name}! Заказ #{order_id} оформлен.")
+
+    except Exception as e:
+        print("ERROR:", e)
+        await message.answer("Ошибка при обработке заказа.")
 
 # ===== START =====
 async def main():
