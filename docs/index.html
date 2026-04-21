@@ -15,7 +15,7 @@
     --muted: #8E8E93;
 }
 
-/* ===== BASE ===== */
+/* ===== GLOBAL ===== */
 body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
@@ -23,15 +23,15 @@ body {
     overflow:hidden;
 }
 
-/* ===== PAGE TRANSITION ===== */
+/* ===== PAGE SYSTEM ===== */
 .page {
     position:absolute;
     width:100%;
-    height:100vh;
+    height:100%;
     top:0;
     left:0;
     opacity:0;
-    transform: translateY(8px);
+    transform: translateY(10px);
     transition: all 0.4s ease;
     pointer-events:none;
 }
@@ -42,40 +42,60 @@ body {
     pointer-events:auto;
 }
 
-/* ===== GENERAL ===== */
-.container {
-    max-width:420px;
-    margin:auto;
-    height:100%;
-}
-
-/* ===== STEP 1 ===== */
+/* =========================
+   🔥 STEP 1 = FULL SCREEN
+   ========================= */
 #step1 {
+    height:100vh;
     display:flex;
     flex-direction:column;
 }
 
+/* image fills top nicely */
 .hero-img {
     width:100%;
-    height:32vh;
+    height:38vh;
     object-fit:cover;
 }
 
+/* perfect spacing distribution */
 .content {
     flex:1;
-    padding:14px 18px;
+    padding:16px 18px;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:space-between;
 }
 
+/* =========================
+   🔵 STEP 2/3 = NO STRETCH
+   ========================= */
+.center-screen {
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    padding:20px;
+    box-sizing:border-box;
+}
+
+/* TEXT */
 .description {
     font-size:14px;
     color:var(--muted);
     line-height:1.6;
     text-align:left;
     margin:0;
+}
+
+/* TITLE */
+h1 {
+    font-weight:300;
+    letter-spacing:3px;
+    font-size:18px;
+    margin:8px 0;
 }
 
 /* BUTTON */
@@ -90,25 +110,10 @@ body {
     font-size:15px;
     font-weight:600;
     letter-spacing:1px;
-    border-radius:8px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    border-radius:10px;
 }
 
-.btn:active {
-    transform: scale(0.97);
-    opacity:0.85;
-}
-
-/* ===== CENTER SCREENS ===== */
-.center-screen {
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-}
-
-/* CARDS */
+/* CARD */
 .card {
     background:#fff;
     border:1px solid #eee;
@@ -117,11 +122,6 @@ body {
     cursor:pointer;
     width:100%;
     border-radius:10px;
-    transition: transform 0.2s ease;
-}
-
-.card:active {
-    transform: scale(0.98);
 }
 
 .price {
@@ -158,25 +158,21 @@ input {
 
 <body>
 
-<!-- STEP 1 (ONLY CHANGED LAYOUT TEXT) -->
+<!-- STEP 1 (FULL SCREEN FIXED LOOK) -->
 <div id="step1" class="page active">
-<div class="container">
 
 <img src="katya.jpg" class="hero-img">
 
 <div class="content">
 
-<!-- TOP TEXT -->
 <p class="description">
 Не для чужих ожиданий.<br>
 А чтобы наконец услышать себя.<br>
 Я создала этот блокнот в момент, когда сама не понимала, куда иду.
 </p>
 
-<!-- CENTER BUTTON -->
 <button class="btn" onclick="nextStep(2)">Сделать предзаказ</button>
 
-<!-- BOTTOM TEXT -->
 <p class="description">
 Он стал местом, где многое начало вставать на свои места.<br>
 Это пространство, где ты сможешь разложить всё по полочкам: мысли, чувства, желания.<br>
@@ -187,11 +183,9 @@ input {
 
 </div>
 </div>
-</div>
 
 <!-- STEP 2 -->
-<div id="step2" class="page">
-<div class="center-screen container">
+<div id="step2" class="page center-screen">
 
 <h1>Издание</h1>
 
@@ -216,11 +210,9 @@ input {
 </div>
 
 </div>
-</div>
 
 <!-- STEP 3 -->
-<div id="step3" class="page">
-<div class="center-screen container">
+<div id="step3" class="page center-screen">
 
 <h1>Данные</h1>
 
@@ -230,7 +222,6 @@ input {
 
 <button class="btn" onclick="sendData()">Подтвердить</button>
 
-</div>
 </div>
 
 <script>
