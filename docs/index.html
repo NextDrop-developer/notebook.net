@@ -22,7 +22,7 @@ body {
     margin:0;
 }
 
-/* ===== SMOOTH PAGE SWITCH ===== */
+/* ===== PAGE SYSTEM (SMOOTH) ===== */
 .page {
     display:none;
     width:100%;
@@ -39,23 +39,21 @@ body {
     transform: translateY(0);
 }
 
-/* ===== STEP 1 NORMAL (NO ZOOM FEEL) ===== */
+/* ===== STEP 1 FIXED ===== */
 .hero-img {
     width:100%;
-    height:auto;
+    height:28vh; /* 🔥 cropped image */
+    object-fit:cover;
     display:block;
 }
 
 .content {
-    padding:20px;
+    height: calc(100vh - 28vh); /* fits exactly 1 screen */
+    padding:16px 18px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
     text-align:center;
-}
-
-h1 {
-    font-weight:300;
-    letter-spacing:3px;
-    font-size:18px;
-    margin:10px 0;
 }
 
 /* TEXT */
@@ -64,9 +62,18 @@ h1 {
     color:var(--muted);
     line-height:1.6;
     text-align:left;
+    margin:0;
 }
 
-/* ===== BUTTON (CENTER LIKE BEFORE) ===== */
+/* TITLE */
+h1 {
+    font-weight:300;
+    letter-spacing:3px;
+    font-size:18px;
+    margin:10px 0;
+}
+
+/* BUTTON */
 .btn {
     background:var(--text);
     color:#fff;
@@ -78,9 +85,8 @@ h1 {
     font-weight:600;
     letter-spacing:1px;
     border-radius:8px;
-    margin:20px auto;
-    display:block;
     cursor:pointer;
+    margin:0 auto;
     transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
@@ -89,15 +95,26 @@ h1 {
     opacity:0.85;
 }
 
-/* ===== CARDS ===== */
+/* ===== OTHER STEPS ===== */
+.center-screen {
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    padding:20px;
+    box-sizing:border-box;
+}
+
+/* CARDS */
 .card {
     background:#fff;
     border:1px solid #eee;
     padding:20px;
     margin-bottom:12px;
     cursor:pointer;
+    width:100%;
     border-radius:10px;
-    text-align:left;
 }
 
 .price {
@@ -118,7 +135,7 @@ h1 {
     line-height:1.5;
 }
 
-/* ===== INPUT ===== */
+/* INPUT */
 input {
     width:100%;
     padding:14px;
@@ -126,37 +143,38 @@ input {
     border:none;
     border-bottom:1px solid #ccc;
     font-size:15px;
-    outline:none;
     background:transparent;
+    outline:none;
 }
 </style>
 </head>
 
 <body>
 
-<!-- STEP 1 -->
+<!-- STEP 1 (FIXED FULL SCREEN) -->
 <div id="step1" class="page active">
 
 <img src="katya.jpg" class="hero-img">
 
 <div class="content">
 
-<h1>ДАЙ СЕБЕ ГОД</h1>
-
 <p class="description">
 Не для чужих ожиданий.<br>
 А чтобы наконец услышать себя.<br><br>
 
-Я создала этот блокнот в момент, когда сама не понимала, куда иду.<br><br>
+Я создала этот блокнот в момент, когда сама не понимала, куда иду.
+</p>
 
+<button class="btn" onclick="nextStep(2)">Сделать предзаказ</button>
+
+<p class="description">
 Это пространство, где ты сможешь разложить всё по полочкам:<br>
 мысли, чувства, желания.<br>
 Без давления. В своём темпе.<br><br>
 
 Тихое пространство только для тебя.<br>
+Теперь — это пространство для тебя. 💛
 </p>
-
-<button class="btn" onclick="nextStep(2)">Сделать предзаказ</button>
 
 </div>
 </div>
@@ -164,7 +182,7 @@ input {
 <!-- STEP 2 -->
 <div id="step2" class="page">
 
-<div class="content">
+<div class="center-screen">
 
 <h1>Издание</h1>
 
@@ -174,7 +192,7 @@ input {
 <p class="card-desc">
 Цветное оформление, твёрдый переплёт и плотная премиальная бумага.<br><br>
 Цена первого тиража. Количество ограничено.<br>
-
+Далее — 55 €
 </p>
 </div>
 
@@ -184,7 +202,7 @@ input {
 <p class="card-desc">
 Чёрно-белая версия с тем же содержанием и структурой.<br><br>
 Цена первого тиража. Количество ограничено.<br>
-
+Далее — 45 €
 </p>
 </div>
 
@@ -194,7 +212,7 @@ input {
 <!-- STEP 3 -->
 <div id="step3" class="page">
 
-<div class="content">
+<div class="center-screen">
 
 <h1>Данные</h1>
 
