@@ -16,7 +16,6 @@
     --accent: #2F4F4F;
 }
 
-/* ===== BASE ===== */
 body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
@@ -25,7 +24,6 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 
-/* ===== PAGE SYSTEM ===== */
 .page {
     display:none;
     width:100%;
@@ -42,7 +40,6 @@ body {
     transform: translateY(0);
 }
 
-/* ===== IMAGE ===== */
 .hero-img {
     width:100%;
     height:28vh;
@@ -50,7 +47,6 @@ body {
     display:block;
 }
 
-/* ===== CONTENT & SPACING ===== */
 .content {
     min-height: calc(100vh - 28vh);
     padding: 24px;
@@ -69,7 +65,6 @@ body {
     margin:0;
 }
 
-/* BUTTON */
 .btn {
     background:var(--text);
     color:#fff;
@@ -92,7 +87,6 @@ body {
     opacity:0.85;
 }
 
-/* ===== STEP 2: CARDS ===== */
 .center-screen {
     min-height:100vh;
     display:flex;
@@ -107,7 +101,7 @@ body {
     background:#fff;
     border: 1px solid #eee;
     padding: 30px 20px;
-    text-align: center; /* Zentriert den Text in der Karte */
+    text-align: center;
     cursor: pointer;
     width: 100%;
     border-radius: 12px;
@@ -145,7 +139,6 @@ body {
     margin: 0;
 }
 
-/* ===== STEP 3: INPUTS ===== */
 input {
     width:100%;
     padding:14px;
@@ -221,6 +214,19 @@ h1 {
     </div>
 </div>
 
+<!-- STEP 4 -->
+<div id="step4" class="page">
+    <div class="center-screen">
+        <h1>Merci 💛</h1>
+        <p class="description" style="text-align:center;">
+            Спасибо за ваш заказ<br><br>
+            Мы скоро свяжемся с вами ✨
+        </p>
+
+        <button class="btn" onclick="tg.close()">Закрыть</button>
+    </div>
+</div>
+
 <script>
 let tg = window.Telegram.WebApp;
 tg.expand();
@@ -264,7 +270,8 @@ function sendData(){
         version: order.version
     }));
 
-    tg.close();
+    // 👉 Danke-Seite anzeigen
+    showStep(4);
 }
 </script>
 
