@@ -13,6 +13,7 @@
     --bg: #F9F8F3;
     --text: #1C1C1C;
     --muted: #8E8E93;
+    --accent: #2F4F4F;
 }
 
 /* ===== BASE ===== */
@@ -20,6 +21,8 @@ body {
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     margin:0;
+    color: var(--text);
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* ===== PAGE SYSTEM ===== */
@@ -47,22 +50,23 @@ body {
     display:block;
 }
 
-/* ===== STEP 1 ===== */
+/* ===== CONTENT & SPACING ===== */
 .content {
-    height: calc(100vh - 28vh);
-    padding:14px 18px; /* already compact */
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
+    min-height: calc(100vh - 28vh);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    box-sizing: border-box;
 }
 
-/* 🔥 ONLY CHANGE = spacing tuning */
 .description {
     font-size:14px;
     color:var(--muted);
     line-height:1.6;
     text-align:left;
-    margin:0; /* removed default spacing */
+    margin:0;
 }
 
 /* BUTTON */
@@ -78,8 +82,9 @@ body {
     letter-spacing:1px;
     border-radius:8px;
     cursor:pointer;
-    margin:8px auto; /* 🔥 reduced spacing */
+    margin: 10px auto; 
     transition: transform 0.2s ease, opacity 0.2s ease;
+    display: block;
 }
 
 .btn:active {
@@ -87,45 +92,60 @@ body {
     opacity:0.85;
 }
 
-/* ===== OTHER STEPS (UNCHANGED) ===== */
+/* ===== STEP 2: CARDS ===== */
 .center-screen {
-    height:100vh;
+    min-height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    padding:20px;
+    padding:24px;
     box-sizing:border-box;
 }
 
 .card {
     background:#fff;
-    border:1px solid #eee;
-    padding:20px;
-    margin-bottom:12px;
-    cursor:pointer;
-    width:100%;
-    border-radius:10px;
+    border: 1px solid #eee;
+    padding: 30px 20px;
+    text-align: center; /* Zentriert den Text in der Karte */
+    cursor: pointer;
+    width: 100%;
+    border-radius: 12px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
 }
 
-.price {
-    color:#2F4F4F;
-    font-weight:600;
-    margin-bottom:5px;
+.price-container {
+    margin-bottom: 15px;
+}
+
+.price-now {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.price-old {
+    color: var(--muted);
+    text-decoration: line-through;
+    font-size: 16px;
+    margin-left: 8px;
 }
 
 .title {
-    font-weight:600;
-    font-size:17px;
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 10px;
 }
 
 .card-desc {
-    font-size:13px;
-    color:var(--muted);
-    margin-top:8px;
-    line-height:1.5;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+    margin: 0;
 }
 
+/* ===== STEP 3: INPUTS ===== */
 input {
     width:100%;
     padding:14px;
@@ -135,6 +155,14 @@ input {
     font-size:15px;
     background:transparent;
     outline:none;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-weight: 600;
+    font-size: 22px;
+    margin-bottom: 25px;
+    text-align: center;
 }
 </style>
 </head>
@@ -143,76 +171,54 @@ input {
 
 <!-- STEP 1 -->
 <div id="step1" class="page active">
+    <img src="katya.jpg" class="hero-img">
+    <div class="content">
+        <div class="description">
+            Не для чужих ожиданий.<br>
+            А чтобы наконец услышать себя.<br><br>
+            Я создала этот блокнот в момент, когда сама не понимала, куда иду.
+        </div>
 
-<img src="katya.jpg" class="hero-img">
+        <button class="btn" onclick="nextStep(2)">Сделать предзаказ</button>
 
-<div class="content">
-
-<p class="description">
-Не для чужих ожиданий.<br>
-А чтобы наконец услышать себя.<br><br>
-
-Я создала этот блокнот в момент, когда сама не понимала, куда иду.
-</p>
-
-<button class="btn" onclick="nextStep(2)">Сделать предзаказ</button>
-
-<p class="description">
-Это пространство, где ты сможешь разложить всё по полочкам:<br>
-мысли, чувства, желания.<br>
-Без давления. В своём темпе.<br><br>
-
-Тихое пространство только для тебя.<br>
-Теперь — это пространство для тебя. 💛
-</p>
-
-</div>
+        <div class="description">
+            Это пространство, где ты сможешь разложить всё по полочкам:<br>
+            мысли, чувства, желания.<br>
+            Без давления. В своём темпе.<br><br>
+            Тихое пространство только для тебя.<br>
+            Теперь — это пространство для тебя. 💛
+        </div>
+    </div>
 </div>
 
 <!-- STEP 2 -->
 <div id="step2" class="page">
+    <div class="center-screen">
+        <h1>Специальная цена предзаказа</h1>
 
-<div class="center-screen">
-
-<h1>Издание</h1>
-
-<div class="card" onclick="selectVersion('Color Edition')">
-<div class="price">49.00 €</div>
-<div class="title">Color Edition</div>
-<p class="card-desc">
-Цветное оформление, твёрдый переплёт и плотная премиальная бумага.<br><br>
-Цена первого тиража. Количество ограничено.<br>
-Далее — 55 €
-</p>
-</div>
-
-<div class="card" onclick="selectVersion('Classic Edition')">
-<div class="price">39.00 €</div>
-<div class="title">Classic Edition</div>
-<p class="card-desc">
-Чёрно-белая версия с тем же содержанием и структурой.<br><br>
-Цена первого тиража. Количество ограничено.<br>
-Далее — 45 €
-</p>
-</div>
-
-</div>
+        <div class="card" onclick="selectVersion('Color Edition')">
+            <div class="price-container">
+                <span class="price-now">49.00 €</span>
+                <span class="price-old">55.00 €</span>
+            </div>
+            <div class="title">Color Edition</div>
+            <p class="card-desc">
+                Цветное оформление, твёрдый переплёт и плотная премиальная бумага.<br><br>
+                Количество первого тиража ограничено.
+            </p>
+        </div>
+    </div>
 </div>
 
 <!-- STEP 3 -->
 <div id="step3" class="page">
-
-<div class="center-screen">
-
-<h1>Данные</h1>
-
-<input id="name" placeholder="ИМЯ">
-<input id="email" placeholder="EMAIL">
-<input id="phone" placeholder="ТЕЛЕФОН">
-
-<button class="btn" onclick="sendData()">Подтвердить</button>
-
-</div>
+    <div class="center-screen">
+        <h1>Ваши данные</h1>
+        <input id="name" placeholder="ИМЯ">
+        <input id="email" placeholder="EMAIL">
+        <input id="phone" placeholder="ТЕЛЕФОН">
+        <button class="btn" onclick="sendData()">Подтвердить</button>
+    </div>
 </div>
 
 <script>
@@ -222,11 +228,8 @@ tg.expand();
 let order = { version: "" };
 
 function showStep(id){
-    document.querySelectorAll('.page')
-        .forEach(p => p.classList.remove('active'));
-
-    document.getElementById('step'+id)
-        .classList.add('active');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('step'+id).classList.add('active');
 }
 
 function nextStep(s){
